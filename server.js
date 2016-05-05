@@ -26,7 +26,7 @@ function start(route, handle) {
 
     request.addListener("end", function() {
       console.log("end listener");
-      route(handle, pathname, response, postData);
+      route(handle, pathname, response, postData); //routed to event handler
     });
 
   }
