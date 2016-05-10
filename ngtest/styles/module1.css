@@ -1,0 +1,43 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.hg_body {
+  display: flex;
+  flex: 1;
+}
+
+.hg_content {
+  flex: 1;
+}
+/*.hg_columns {
+  flex: 1 1 1;
+}*/
+.hg_nav {
+  order: -1;
+}
+
+.hg_content {
+  background: gray;
+}
+.hg_columns {
+  background: white;
+}
+header, footer {
+  background: #000;
+  color: #fff;
+  padding: 10px;
+}
+footer a {
+  flex: 1;
+}
+h1 {
+  margin: 0;
+  font-size: 15px;
+}
+html,body {
+  height: 100%;
+  margin: 0;
+  font-family: Helvetica;
+}

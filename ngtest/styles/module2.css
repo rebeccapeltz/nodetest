@@ -1,0 +1,43 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout__body {
+  display: flex;
+  flex: 1;
+}
+
+.layout__content {
+  flex: 1;
+}
+.layout__columns {
+  flex: 0 0 12em;
+}
+.layout__nav {
+  order: -1;
+}
+
+.layout__content {
+  background: orange;
+}
+.layout__columns {
+  background: green;
+}
+header, footer {
+  background: #000;
+  color: #fff;
+  padding: 10px;
+}
+footer a {
+  flex: 1;
+}
+h1 {
+  margin: 0;
+  font-size: 15px;
+}
+html,body {
+  height: 100%;
+  margin: 0;
+  font-family: Helvetica;
+}

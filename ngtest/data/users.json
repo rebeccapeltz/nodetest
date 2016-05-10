@@ -1,0 +1,19 @@
+[{
+    "name": "Alan Turing",
+    "email": "turing@gmail.com",
+    "regdate": 1462759396954,
+    "key":"QZdc5f132a3c49700934481addd5ce1659",
+    "confirmed": true
+}, {
+    "name": "Ada Lovelace",
+    "email": "lovelace@aol.com",
+    "key":"WRdc5f132a3c49700934481addd5ce1659",
+    "regdate": 1462759438651,
+    "confirmed": true
+}, {
+    "name": "George Boole",
+    "email": "boole@kolab.org",
+    "key":"XLdc5f132a3c49700934481addd5ce1659",
+    "regdate": 1462759458876,
+    "confirmed": false
+}]

@@ -10,3 +10,8 @@ var hasDup = function(array) {
 };
 
 console.log(hasDup([1, 2, 3, 2]));
+
+//hash solution
+//bitmap solution
+
+//map reduce
