@@ -4,39 +4,55 @@ var testfn = function() {
   console.log("in reverse");
 }
 
+//O(3n)
 var withFunctions = function(str) {
   return str.split('').reverse().join('');
 }
 
-
-var withSplitIterAndSpace = function(str) {
+//O(3n)
+var withSplitIter = function(str) {
   var result = [];
-  var strArray = str.split('');
-  strArray.forEach(function(item, idx, array) {
+  str.split('').forEach(function(item, idx, array) {
     result[array.length - 1 - idx] = item;
   });
   return result.join('');
 }
 
-var withNoReturn = function(str){
-  for (var i=0; i< str.length; i++){
+//O(3n)
+var withSplitHalf = function(str){
+  var result = [];
+  var strArr = str.split('');
+  for (var i=0; i< strArr.length/2; i++){
+    result[i] = strArr[strArr.length - 1 - i];
+    result[strArr.length - 1 - i] = strArr[i];
+  }
+  return result.join('');
+}
+
+//O(n)
+var withNoReturn = function(str) {
+  for (var i = 0; i < str.length; i++) {
     process.stdout.write(str[str.length - 1 - i]);
   }
   process.stdout.write('\n');
 }
 
+//O(n)
 var withCharIter = function(str) {
   var result = '';
-  for (var i=0; i< str.length; i++){
+  for (var i = 0; i < str.length; i++) {
     result += str.charAt(str.length - 1 - i);
   }
   return result;
 }
 
+//strings are immutable: can't set a character in place
+
 module.exports = {
   test: testfn,
   withFunctions: withFunctions,
-  withSplitIterAndSpace: withSplitIterAndSpace,
+  withSplitIter: withSplitIter,
   withNoReturn: withNoReturn,
-  withCharIter: withCharIter
+  withCharIter: withCharIter,
+  withSplitHalf: withSplitHalf
 }
