@@ -6,11 +6,13 @@ var testfn = function() {
 
 //O(3n)
 var withFunctions = function(str) {
+  if (str.length < 2) return str;
   return str.split('').reverse().join('');
 }
 
 //O(3n)
 var withSplitIter = function(str) {
+  if (str.length < 2) return str;
   var result = [];
   str.split('').forEach(function(item, idx, array) {
     result[array.length - 1 - idx] = item;
@@ -20,6 +22,7 @@ var withSplitIter = function(str) {
 
 //O(3n)
 var withSplitHalf = function(str){
+  if (str.length < 2) return str;
   var result = [];
   var strArr = str.split('');
   for (var i=0; i< strArr.length/2; i++){
@@ -31,6 +34,7 @@ var withSplitHalf = function(str){
 
 //O(n)
 var withNoReturn = function(str) {
+  if (str.length < 2) return str;
   for (var i = 0; i < str.length; i++) {
     process.stdout.write(str[str.length - 1 - i]);
   }
@@ -39,6 +43,7 @@ var withNoReturn = function(str) {
 
 //O(n)
 var withCharIter = function(str) {
+  if (str.length < 2) return str;
   var result = '';
   for (var i = 0; i < str.length; i++) {
     result += str.charAt(str.length - 1 - i);
