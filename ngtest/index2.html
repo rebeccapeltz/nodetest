@@ -5,27 +5,71 @@
     <meta charset="utf-8">
     <title>Flex layout</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/styles/module.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 
+    <link rel="stylesheet" type="text/css" href="/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/styles/skeleton.css">
+    <link rel="stylesheet" type="text/css" href="/styles/module.css">
 </head>
 
-<body>
+<body ng-app='app'>
 
 
-  <header>
-    <h1>Holy Grail layout made easy with flexbox</h1>
-  </header>
-  <div class="layout__body">
-    <main class="layout__content">...</main>
-    <nav class="layout__nav layout__columns">...</nav>
-    <aside class="layout__aside layout__columns">...</aside>
-  </div>
-  <footer>
+    <header>
+        <h6 class="u-pull-left">Holy Grail layout made easy with flexbox</h6>
+        <h6 class="u-pull-right">Welcome</h6>
+    </header>
+    <div class="hg_body">
+        <main class="hg_content">
+            <div class="container" ng-controller='UsersCtrl as Users'>
+                <table class="u-full-width">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Registration Date</th>
+                            <th>Key</th>
+                            <th>Confirmed</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="property in users">
+                          <td><div class="user-name">{{property.name}}</div></td>
+                          <td>{{property.email}}</td>
+                          <td>{{formatDate(property.regdate)}}</td>
+                          <td><div class="user-key">{{property.key}}</div></td>
+                          <td>{{property.confirmed}}</td>
+                          <td><a href="" class="button btn-new"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>edit</a></td>
+                        </tr>
 
-    <a href="http://philipwalton.github.io/solved-by-flexbox/demos/holy-grail/">Adapted from this awesome site</a>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <nav class="hg_nav hg_columns">&nbsp;</nav>
+        <aside class="hg_aside hg_columns">&nbsp;</aside>
+    </div>
+    <footer>
 
- </footer>
+        <a href="http://philipwalton.github.io/solved-by-flexbox/demos/holy-grail/">Adapted from this awesome site</a>
+
+    </footer>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.29/angular.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
+    <script>
+        var app = angular.module('app', []);
+        app.controller('UsersCtrl', function($scope, $http) {
+            $http.get("/data/users.json")
+                .then(function(response) {
+                    $scope.users = response.data;
+                });
+            $scope.formatDate = function(aDate){
+              return moment(aDate).format('YYYY MM DD');
+            }
+        });
+    </script>
 
 </body>
 
