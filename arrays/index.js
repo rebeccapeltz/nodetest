@@ -13,3 +13,8 @@ console.log("withCharIter", reverse.withCharIter("abcd"));
 
 console.log("withSplitHalf", reverse.withSplitHalf("abcd"));
 console.log("withSplitHalf", reverse.withSplitHalf("abcde"));
+
+String.prototype.reverse = String.prototype.reverse || function () {
+  return this.split('').reverse().join('');
+}
+console.log("prototype",'abcd'.reverse());

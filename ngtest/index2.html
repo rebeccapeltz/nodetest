@@ -35,12 +35,16 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="property in users">
-                          <td><div class="user-name">{{property.name}}</div></td>
-                          <td>{{property.email}}</td>
-                          <td>{{formatDate(property.regdate)}}</td>
-                          <td><div class="user-key">{{property.key}}</div></td>
-                          <td>{{property.confirmed}}</td>
-                          <td><a href="" class="button btn-new"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>edit</a></td>
+                            <td>
+                                <div class="user-name">{{property.name}}</div>
+                            </td>
+                            <td>{{property.email}}</td>
+                            <td>{{formatDate(property.regdate)}}</td>
+                            <td>
+                                <div class="user-key">{{property.key}}</div>
+                            </td>
+                            <td>{{property.confirmed}}</td>
+                            <td><a href="" class="button btn-new"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>edit</a></td>
                         </tr>
 
                     </tbody>
@@ -56,8 +60,9 @@
 
     </footer>
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.29/angular.js"></script> -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
+    <script type="text/javascript" src="/vendor/at-table/angular-table.js"></script>
     <script>
         var app = angular.module('app', []);
         app.controller('UsersCtrl', function($scope, $http) {
@@ -65,8 +70,8 @@
                 .then(function(response) {
                     $scope.users = response.data;
                 });
-            $scope.formatDate = function(aDate){
-              return moment(aDate).format('YYYY MM DD');
+            $scope.formatDate = function(aDate) {
+                return moment(aDate).format('YYYY MM DD');
             }
         });
     </script>
