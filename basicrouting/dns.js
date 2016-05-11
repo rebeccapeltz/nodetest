@@ -1,4 +1,5 @@
 var dns = require('dns');
+//https://millermedeiros.github.io/mdoc/examples/node_api/doc/dns.html#dns.lookup
 
 dns.resolve4('www.google.com', function (err, addresses) {
   if (err) throw err;

@@ -14,6 +14,9 @@ console.log("withCharIter", reverse.withCharIter("abcd"));
 console.log("withSplitHalf", reverse.withSplitHalf("abcd"));
 console.log("withSplitHalf", reverse.withSplitHalf("abcde"));
 
+console.log("withBuffer", reverse.withBuffer("abcde"));
+
+
 String.prototype.reverse = String.prototype.reverse || function () {
   return this.split('').reverse().join('');
 }

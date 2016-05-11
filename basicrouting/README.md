@@ -2,11 +2,11 @@
 
 OSI Stack
 
-1. application  HTTP
-2. presentation
-3. session
-4. transport    TCP
-5. network      IP
+1. application    HTTP, FTP
+2. presentation   .css, .jpg, HTTPS encryption
+3. session        
+4. transport      TCP, UDP
+5. network        IP Routers and Switches
 6. datalink
 7. physical
 

@@ -51,6 +51,17 @@ var withCharIter = function(str) {
   return result;
 }
 
+//O(N/2) 
+var withBuffer = function(str) {
+  var buffer = new Buffer(str);
+  for (var i=0;i< buffer.length/2; i++){
+    var swap = buffer[i];
+    buffer[i] = buffer[buffer.length - 1 - i];
+    buffer[buffer.length - 1 - i] = swap;
+  }
+  return buffer.toString();
+}
+
 //strings are immutable: can't set a character in place
 
 module.exports = {
@@ -59,5 +70,6 @@ module.exports = {
   withSplitIter: withSplitIter,
   withNoReturn: withNoReturn,
   withCharIter: withCharIter,
-  withSplitHalf: withSplitHalf
+  withSplitHalf: withSplitHalf,
+  withBuffer: withBuffer
 }
