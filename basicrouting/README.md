@@ -12,4 +12,5 @@ OSI Stack
 
 Response/Request Cycle
 Browser: URL
-DNS Server: 
+   `require('url').parse('http://www.mydomain.com?test=1')`
+DNS Server: translate domain name in to IP address
