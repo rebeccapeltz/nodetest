@@ -1,19 +1,19 @@
 # Code for Reversing a String
 
 ```
-//http://eddmann.com/posts/ten-ways-to-reverse-a-string-in-javascript/
+//see also: http://eddmann.com/posts/ten-ways-to-reverse-a-string-in-javascript/
 
 var testfn = function() {
   console.log("in reverse");
 }
 
-//O(3n)
+//O(N) 3N
 var withFunctions = function(str) {
   if (str.length < 2) return str;
   return str.split('').reverse().join('');
 }
 
-//O(3n)
+//O(N)
 var withSplitIter = function(str) {
   if (str.length < 2) return str;
   var result = [];
@@ -23,7 +23,7 @@ var withSplitIter = function(str) {
   return result.join('');
 }
 
-//O(3n)
+//O(N/2)
 var withSplitHalf = function(str){
   if (str.length < 2) return str;
   var result = [];
@@ -35,7 +35,7 @@ var withSplitHalf = function(str){
   return result.join('');
 }
 
-//O(n)
+//O(N)
 var withNoReturn = function(str) {
   if (str.length < 2) return str;
   for (var i = 0; i < str.length; i++) {
@@ -44,7 +44,7 @@ var withNoReturn = function(str) {
   process.stdout.write('\n');
 }
 
-//O(n)
+//O(N)
 var withCharIter = function(str) {
   if (str.length < 2) return str;
   var result = '';
