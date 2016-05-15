@@ -21,34 +21,34 @@
     </header>
     <div class="hg_body">
         <main class="hg_content">
-            <div class="container" ng-controller='UsersCtrl as Users'>
-                <table class="u-full-width">
+            <div class="container" ng-controller='UsersController'>
+                <table class="table table-striped" at-table at-paginated at-list="users" at-config="config">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Registration Date</th>
-                            <th>Key</th>
-                            <th>Confirmed</th>
-                            <th>Action</th>
-                        </tr>
+                      <tr>
+                          <th  at-attribute="name" width="200" at-initial-sorting="asc"></th>
+                          <th  at-attribute="email"></th>
+                          <th  at-attribute="regdate"></th>
+                          <th at-attribute="key"></th>
+                          <th  at-attribute="confirmed"></th>
+                          <!-- <td><a href="" class="button btn-new"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>edit</a></td> -->
+                      </tr>
+
                     </thead>
+                    <tr>
+                        <td at-implicit at-sortable at-attribute="name" width="200" at-initial-sorting="asc"></td>
+                        <td at-implicit at-sortable at-attribute="email"></td>
+                        <td at-implicit at-sortable at-attribute="regdate"></td>
+                        <td at-implicit at-sortable at-attribute="key"></td>
+                        <td at-implicit at-sortable at-attribute="confirmed"></td>
+                        <!-- <td><a href="" class="button btn-new"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>edit</a></td> -->
+                    </tr>
                     <tbody>
-                        <tr ng-repeat="property in users">
-                            <td>
-                                <div class="user-name">{{property.name}}</div>
-                            </td>
-                            <td>{{property.email}}</td>
-                            <td>{{formatDate(property.regdate)}}</td>
-                            <td>
-                                <div class="user-key">{{property.key}}</div>
-                            </td>
-                            <td>{{property.confirmed}}</td>
-                            <td><a href="" class="button btn-new"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>edit</a></td>
-                        </tr>
+
 
                     </tbody>
                 </table>
+                <at-pagination at-config="config" at-list="users"></at-pagination>
+                
             </div>
         </main>
         <nav class="hg_nav hg_columns">&nbsp;</nav>
@@ -64,12 +64,17 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
     <script type="text/javascript" src="/vendor/at-table/angular-table.js"></script>
     <script>
-        var app = angular.module('app', []);
-        app.controller('UsersCtrl', function($scope, $http) {
+        var app = angular.module('app', ['angular-table']);
+        app.controller('UsersController', function($scope, $http) {
             $http.get("/data/users.json")
                 .then(function(response) {
                     $scope.users = response.data;
+
                 });
+            $scope.config = {
+                itemsPerPage: 5,
+                fillLastPage: true
+            }
             $scope.formatDate = function(aDate) {
                 return moment(aDate).format('YYYY MM DD');
             }

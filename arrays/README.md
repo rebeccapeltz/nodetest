@@ -2,6 +2,7 @@
 
 ```
 //see also: http://eddmann.com/posts/ten-ways-to-reverse-a-string-in-javascript/
+//http://stackoverflow.com/questions/487258/plain-english-explanation-of-big-o
 
 var testfn = function() {
   console.log("in reverse");

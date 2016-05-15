@@ -51,7 +51,7 @@ var withCharIter = function(str) {
   return result;
 }
 
-//O(N/2) 
+//O(N/2)
 var withBuffer = function(str) {
   var buffer = new Buffer(str);
   for (var i=0;i< buffer.length/2; i++){
@@ -71,5 +71,6 @@ module.exports = {
   withNoReturn: withNoReturn,
   withCharIter: withCharIter,
   withSplitHalf: withSplitHalf,
-  withBuffer: withBuffer
+  withBuffer: withBuffer,
+  arrProp :[]
 }

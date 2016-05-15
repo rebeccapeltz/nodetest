@@ -7,8 +7,8 @@ OSI Stack
 3. session        
 4. transport      TCP, UDP
 5. network        IP Routers and Switches
-6. datalink
-7. physical
+6. datalink       Switches
+7. physical       HPBS,
 
 Response/Request Cycle
 Browser: URL
