@@ -24,13 +24,13 @@ http.createServer((req, res) => {
     req.on('end', () => {
       //parse json
       jsonPromise(bufArr.toString()).then((data) => {
-        console.log("promise resolve",JSON.stringify(data));
+        console.log("promise resolve", JSON.stringify(data));
         return data;
       }, (err) => {
-        console.log("promise reject",err);
+        console.log("promise reject", err);
         res.statusCode = 400;
         res.end("JSON parse fail\n");
-      }).then((data)=>{
+      }).then((data) => {
         var file = fs.createWriteStream(__dirname + '/data/test.json');
         file.on('error', (err) => {
           res.statusCode = 400;
@@ -41,30 +41,31 @@ http.createServer((req, res) => {
         file.write(JSON.stringify(data));
         file.end();
         res.end(bufArr.toString() + '\n');
+
       });
       //parse error
       // let jsonData = {};
-// try {
-//   jsonData = JSON.parse(bufArr.toString());
-//   //write to file
-//   //handle write error
-//
-//   var file = fs.createWriteStream(__dirname + '/data/test.json');
-//   file.on('error', (err) => {
-//     res.statusCode = 400;
-//     console.log(err + "error writing\n");
-//     res.end("error writing json\n");
-//   });
-//
-//   file.write(JSON.stringify(jsonData));
-//   file.end();
-//   res.end(bufArr.toString() + '\n');
-//
-// } catch (e) {
-//   res.statusCode = 400;
-//   console.log("error parsing json\n");
-//   res.end("error parsing json\n");
-// }
+      // try {
+      //   jsonData = JSON.parse(bufArr.toString());
+      //   //write to file
+      //   //handle write error
+      //
+      //   var file = fs.createWriteStream(__dirname + '/data/test.json');
+      //   file.on('error', (err) => {
+      //     res.statusCode = 400;
+      //     console.log(err + "error writing\n");
+      //     res.end("error writing json\n");
+      //   });
+      //
+      //   file.write(JSON.stringify(jsonData));
+      //   file.end();
+      //   res.end(bufArr.toString() + '\n');
+      //
+      // } catch (e) {
+      //   res.statusCode = 400;
+      //   console.log("error parsing json\n");
+      //   res.end("error parsing json\n");
+      // }
 
     });
   } else if (req.method === 'GET') {
@@ -84,7 +85,6 @@ http.createServer((req, res) => {
         "Content-Type": "application/json"
       });
       res.end(bufArr.toString() + '\n');
-
     });
 
 
