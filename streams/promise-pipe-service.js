@@ -10,11 +10,16 @@ http.createServer((req, res) => {
   //TODO req error
   req.on('error', (err) => {
     res.statusCode = 400;
-    res.end("Request Error\n");
+    res.end("Client Request Error\n");
   })
 
   //TODO res error
+  req.on('error', (err) => {
+    res.statusCode = 400;
+    res.end("Server response Error\n");
+  })
 
+  //POST
   if (req.method === 'POST') {
     //read data into buffer
     let bufArr = [];
@@ -42,20 +47,24 @@ http.createServer((req, res) => {
         bufferStream.pipe(file);
         //file.end(); //NO!!
         console.log("post successful", JSON.stringify(data));
-        res.end("post successful "+ JSON.stringify(data)+'\n');
+        res.end("post successful " + JSON.stringify(data) + '\n');
 
 
       });
     });
-  } else if (req.method === 'GET') {
+    return;
+  }
+
+  //GET
+  if (req.method === 'GET' && req.url === '/') {
     // read data
     var file = fs.createReadStream(__dirname + '/data/test.json');
-    file.pipe(res);
+    return file.pipe(res);
+  }
 
-  } else {
-    res.status = 404;
-    res.end("Not found.\n");
-  } //TODO else 404
+  //NOT FOUND
+  res.status = 404;
+  res.end("Not found.\n");
 
 }).listen(3000, () => {
   console.log('server up on 3000');
