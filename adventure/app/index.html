@@ -1,0 +1,44 @@
+<!doctype html>
+<html  ng-app>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>adventure</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+
+<body>
+
+
+    <div class="container">
+      <div class="game-console">
+        <textarea class="game-console-textbox" ng-model="gameController.model.consoleText" spellcheck="false" readonly></textarea>
+      </div>
+      <div class="game-input-container" ng-cloak>
+        <span class="game-input-prompt">&gt;</span>
+        <span class="game-input-text" ng-bind="gameController.model.userInput"></span>
+        <span class="game-input-cursor">_</span>
+        <input type="text" maxlength="30" class="game-input" ng-model="gameController.model.userInput" ng-keydown="gameController.executeInput($event)" autofocus>
+      </div>
+
+
+    </div>
+
+
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+
+
+  <!-- build:js scripts/main.js -->
+  <script src="scripts/main.js"></script>
+  <!-- endbuild -->
+</body>
+
+</html>

@@ -13,5 +13,5 @@ function factorial(num) {
   }
 }
 
-var result = factorial(8);
-console.log('factorial',result);
+var result = factorial(3);
+console.log('factorial',3,result);

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>First App</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body data-ng-app="FirstApp">
+
+    <main ng-cloak ng-controller="FirstController as first">
+      Name inside controller scope is: <strong>{{first.firstname}}</strong>
+      <first-directive>
+          Name inside directive scope is: <strong>{{first.firstname}}</strong>
+      </first-directive>
+      <div class="first-directive"></div>
+      <div first-directive></div>
+
+
+
+
+    </main>
+    <script src="bundle.js"></script>
+</body>
+
+</html>

@@ -10,11 +10,10 @@ function helloIter(n) {
 
 helloIter(5);
 
-function helloRecur(n) {
+function helloRecur(n,count) {
   if (n === 0) return;   //set base
-  console.log(n, 'Hello'); //(A)
-  helloRecur(n-1);      //recur: new stack frame
-  //console.log(n, 'Hello');  //(B)
+  console.log(count, 'Hello'); //(A)
+  helloRecur(--n, ++count);      //recur: new stack frameß
 }
 
-helloRecur(5);
+helloRecur(5,0);

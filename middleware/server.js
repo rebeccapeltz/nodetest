@@ -29,6 +29,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
 //log all requests
 app.use(logger);
 //move code to lib
@@ -36,6 +38,8 @@ app.use(logger);
 //   console.log("REQUEST", req.time, req.url);
 //   next();
 // })
+
+
 
 //Set data uses middleware to parse JSON and set body and model
 routerSetData.use(jsonParser);
