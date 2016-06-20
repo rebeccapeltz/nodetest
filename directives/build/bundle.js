@@ -52,6 +52,9 @@
 	var IsolateApp = angular.module('IsolateApp', []);
 	__webpack_require__(3)(IsolateApp);
 
+	var LauremPixel = angular.module('LauremPixelApp', []);
+	__webpack_require__(10)(LauremPixel);
+
 
 /***/ },
 /* 1 */
@@ -31581,6 +31584,7 @@
 	module.exports = function(app) {
 	  __webpack_require__(7)(app);
 	  __webpack_require__(8)(app);
+	  __webpack_require__(9)(app);
 	};
 
 
@@ -31623,6 +31627,89 @@
 	        lastname: '=',  //this is for 2 way binding
 	        fullname: '&',  //behavior function
 	        address: '='
+	      }
+	    };
+
+	  });
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.directive('isolateDirective2', function() {
+	    return {
+	      restrict: 'A',
+	      templateUrl: './templates/Isolate/IsolateTemplate2.html',
+	      scope: {
+	        authLastname: '@lastname', //this is for already evaluated to a string
+	        authFirstname: '=firstname'  //this is for 2 way binding
+	      }
+	    };
+
+	  });
+	};
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(11)(app);
+	  __webpack_require__(13)(app);
+	};
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(12)(app);
+	};
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.controller('LauremPixelController', ['$scope', function() {
+	    this.url = 'http://lorempixel.com/400/400/food/',
+	    this.height = 400;
+	    this.width = 400;
+	    this.title = 'Food';
+	  }]);
+	};
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(14)(app);
+	};
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.directive('lauremPixel', function() {
+	    return {
+	      restrict: 'E',
+	      //template: '',
+	      templateUrl: './templates/LauremPixel/LauremPixelTemplate.html',
+	      scope: {
+	        url: '@',
+	        height: '@',
+	        width: '@',
+	        title: '@'
 	      }
 	    };
 
