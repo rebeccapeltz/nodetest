@@ -26,15 +26,15 @@ Tree.prototype.traverse = function(node) {
 
   //no inorder n-ary
 
-  function inorder(node) {
+  function heirarchy(node) {
     if (!node) return;
     console.log(node.value); //preorder
     for (var i = 0; i < node.children.length; i++) {
-      inorder(node.children[i]);
+      heirarchy(node.children[i]);
     }
     //console.log(node.value); //postorder
   }
-  inorder(testNode);
+  heirarchy(testNode);
 
 };
 
