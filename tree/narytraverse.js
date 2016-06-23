@@ -35,20 +35,21 @@ Tree.prototype.traverse = function() {
 
 };
 
-Tree.prototype.indent = function(node) {
-  var testNode = node || this.root;
-
+//a traversal with a helper so I can include
+//indent to reveal heirarchy
+Tree.prototype.indent = function() {
+  var testNode = this.root;
   function indentHelper(node, indent) {
     if (!node) return; //base
     console.log(indent + node.value); //location of operation
     for (var i = 0; i < node.children.length; i++) {
       indentHelper(node.children[i], indent + ' '); //recur
     }
-
   }
   indentHelper(testNode, ' ');
-
 };
+
+//a traversal that can run an process on a node
 
 Tree.prototype.traverseAndProcess = function(process) {
   function heirarchy(node) {
@@ -75,9 +76,9 @@ Tree.prototype.size = function() {
   return length;
 };
 
-Tree.prototype.exists = function (val){
+Tree.prototype.exists = function(val) {
   var exists = false;
-  this.traverseAndProcess(function(node){  // jshint ignore:node
+  this.traverseAndProcess(function(node) { // jshint ignore:node
     if (node.value === val) exists = true;
   });
   return exists;
