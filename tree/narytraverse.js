@@ -21,10 +21,7 @@ function Tree() {
   console.log(JSON.stringify(a));
 }
 //n-ary
-Tree.prototype.traverse = function(node) {
-  var testNode = node || this.root;
-
-  //no inorder n-ary
+Tree.prototype.traverse = function() {
 
   function heirarchy(node) {
     if (!node) return;
@@ -34,7 +31,7 @@ Tree.prototype.traverse = function(node) {
     }
     //console.log(node.value); //postorder
   }
-  heirarchy(testNode);
+  heirarchy(this.root);
 
 };
 
@@ -42,10 +39,10 @@ Tree.prototype.indent = function(node) {
   var testNode = node || this.root;
 
   function indentHelper(node, indent) {
-    if (!node) return;  //base
+    if (!node) return; //base
     console.log(indent + node.value); //location of operation
     for (var i = 0; i < node.children.length; i++) {
-      indentHelper(node.children[i], indent + ' ');  //recur
+      indentHelper(node.children[i], indent + ' '); //recur
     }
 
   }
@@ -53,6 +50,44 @@ Tree.prototype.indent = function(node) {
 
 };
 
+Tree.prototype.traverseAndProcess = function(process) {
+  function heirarchy(node) {
+    if (node) {
+      process(node);
+      for (var i = 0; i < node.children.length; i++) {
+        heirarchy(node.children[i]);
+      }
+    }
+  }
+  heirarchy(this.root);
+};
+
+
+
+Tree.prototype.size = function() {
+  var length = 0;
+
+  this.traverseAndProcess(function(node) { // jshint ignore:node
+    //console.log(node);
+    length++;
+  });
+
+  return length;
+};
+
+Tree.prototype.exists = function (val){
+  var exists = false;
+  this.traverseAndProcess(function(node){  // jshint ignore:node
+    if (node.value === val) exists = true;
+  });
+  return exists;
+};
+
+//Test my tree functions
 var tree = new Tree();
-//tree.traverse();
+tree.traverse();
 tree.indent();
+console.log('size of tree:', tree.size(null, 0));
+
+console.log('exists a', tree.exists('a'));
+console.log('exists z', tree.exists('z'));
