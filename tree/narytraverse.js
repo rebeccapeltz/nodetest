@@ -21,6 +21,7 @@ function Tree() {
   console.log(JSON.stringify(a));
 }
 //n-ary
+//traverse and log
 Tree.prototype.traverse = function() {
 
   function heirarchy(node) {
@@ -29,7 +30,6 @@ Tree.prototype.traverse = function() {
     for (var i = 0; i < node.children.length; i++) {
       heirarchy(node.children[i]);
     }
-    //console.log(node.value); //postorder
   }
   heirarchy(this.root);
 
@@ -49,7 +49,8 @@ Tree.prototype.indent = function() {
   indentHelper(testNode, ' ');
 };
 
-//a traversal that can run an process on a node
+//a traversal that can run a process on a node
+//can only do this in a language with 1st order functions
 
 Tree.prototype.traverseAndProcess = function(process) {
   function heirarchy(node) {
@@ -64,7 +65,7 @@ Tree.prototype.traverseAndProcess = function(process) {
 };
 
 
-
+// get the number of nodes in the tree
 Tree.prototype.size = function() {
   var length = 0;
 
@@ -76,6 +77,7 @@ Tree.prototype.size = function() {
   return length;
 };
 
+//does a value already exist in the tree?
 Tree.prototype.exists = function(val) {
   var exists = false;
   this.traverseAndProcess(function(node) { // jshint ignore:node
