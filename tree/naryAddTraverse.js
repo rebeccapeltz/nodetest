@@ -8,11 +8,12 @@ function Tree(val) {
 //traverse and log
 Tree.prototype.traverse = function() {
 
-  console.log('traverse,',this.value);
+  console.log('traverse,', this.value);
 
   for (var i = 0; i < this.children.length; i++) {
     this.children[i].traverse();
   }
+  //console.log('traverse,', this.value);
 };
 
 //Test my tree functions
@@ -30,7 +31,7 @@ b.children.push(d);
 d.children.push(e);
 
 console.log(JSON.stringify(a));
-a.traverse(a);
+a.traverse();
 
 //test null
 var n = new Tree(null);

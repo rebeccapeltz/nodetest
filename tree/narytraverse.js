@@ -8,7 +8,7 @@ function Tree(val) {
 //traverse and log
 Tree.prototype.traverse = function() {
 
-  console.log('traverse,',this.value);
+  console.log('traverse,', this.value);
 
   for (var i = 0; i < this.children.length; i++) {
     this.children[i].traverse();
