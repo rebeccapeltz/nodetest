@@ -1,0 +1,24 @@
+<h1>Customers</h1>
+<div class="container">
+
+  <div class="row">
+    <div class="twelve column">
+      <table class="u-full-width">
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Zipcode</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="data in customers">
+            <td>{{data.firstname}}</td>
+            <td>{{data.lastname}}</td>
+            <td>{{data.zipcode}}</td>
+            <td><a href="#/edit-customer/{{data.customerNumber}}" class="btn">&nbsp;Edit Customer</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
