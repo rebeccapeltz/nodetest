@@ -54,7 +54,7 @@ module.exports = function(app) {
     };
 
     obj.insertCustomer = function(customer) {
-      var id = -1;
+      var id = 0;
       customers.map(function(item) {
         if (item.customerNumber > id) id = item.customerNumber;
       });
@@ -129,5 +129,56 @@ module.exports = function(crudApp) {
     </div>
 
   </div>
+
+```
+###### Edit controller
+``` JavaScript
+module.exports = function(app) {
+  app.controller('editCtrl', function($scope, $rootScope, $location, $routeParams, services, customer) {
+    var customerID = ($routeParams.customerID) ? parseInt($routeParams.customerID) : 0;
+    var original = customer || {};
+    $scope.customer = window.angular.copy(original);
+    $scope.deleteCustomer = function(customer) {
+      $location.path('/list');
+      if (confirm('Are you sure to delete customer number: ' + $scope.customer.customerNumber) == true)
+        services.deleteCustomer(customer.customerNumber);
+    };
+    $scope.go = function(path) {
+      $location.path(path);
+    };
+    $scope.saveCustomer = function(customer) {
+      if (customerID <= 0) {
+        services.insertCustomer(customer);
+      } else {
+        services.updateCustomer(customerID, customer);
+      }
+      $location.path('/list');
+    };
+  });
+};
+
+```
+###### Edit View (Add, Edit, Delete)
+``` html
+<h2>Customer</h2>
+<div class="container">
+  <div class="row">
+    <form>
+      <label for="firstname">First Name</label>
+      <input class="u-full-width" ng-model="customer.firstname" type="text" placeholder="enter first name" id="firstname">
+
+      <label for="lastname">Last Name</label>
+      <input type="text" class="u-full-width" ng-model="customer.lastname" id="lastname">
+
+      <label for="zipcode">Zipcode</label>
+      <input type="text" class="u-full-width" ng-model="customer.zipcode" id="zipcode">
+
+      <input type="button" class="button-primary" ng-click="go('/list')" value="Cancel">
+      <input type="button" class="button-primary" ng-click="deleteCustomer(customer)" value="Delete">
+      <input type="button" class="button-primary" ng-click="saveCustomer(customer);" value="Save">
+
+    </form>
+  </div>
+</div>
 
 ```
