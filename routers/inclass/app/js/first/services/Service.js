@@ -22,7 +22,7 @@ module.exports = function(app) {
     };
 
     obj.insertCustomer = function(customer) {
-      var id = -1;
+      var id = 0;
       customers.map(function(item) {
         if (item.customerNumber > id) id = item.customerNumber;
       });

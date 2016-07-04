@@ -44,38 +44,42 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function(module) {//require('../app/js/client');
-	const angular = __webpack_require__(3);
+	const angular = __webpack_require__(2);
 
+	__webpack_require__(4);
 	__webpack_require__(5);
-	__webpack_require__(6);
+	// let ListController;
+	// let $httpBackend;
+	describe('crud app tests', () => {
+	  beforeEach(() => {
+	    angular.mock.module('crudApp');
+	    // angular.mock.inject(function($controller, _$httpBackend_) {
+	    //   ListController = new $controller('ListController');
+	    //   $httpBackend = _$httpBackend_;
+	    // });
+	  });
 
-	it('should map routes to controllers', function() {
-	  module('crudApp');
+	  it('should map routes to controllers', function() {
+	    module('crudApp');
 
-	  inject(function($route) {
+	    inject(function($route) {
 
-	    expect($route.routes['/list'].controller).toBe('ListController');
-	    expect($route.routes['/list'].templateUrl).
-	    toEqual('/templates/partials/ListView.html');
+	      expect($route.routes['/list'].controller).toBe('ListController');
+	      expect($route.routes['/list'].templateUrl).
+	      toEqual('/templates/partials/ListView.html');
 
 
-	    // otherwise redirect to
-	    expect($route.routes[null].redirectTo).toEqual('/')
+	      // otherwise redirect to
+	      expect($route.routes[null].redirectTo).toEqual('/');
+	    });
 	  });
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)(module)))
 
 /***/ },
-/* 2 */
+/* 1 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -91,15 +95,15 @@
 
 
 /***/ },
-/* 3 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(4);
+	__webpack_require__(3);
 	module.exports = angular;
 
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -31577,7 +31581,7 @@
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -34702,30 +34706,30 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(3);
-	__webpack_require__(7);
+	__webpack_require__(2);
+	__webpack_require__(6);
 	var angular = window.angular;
 
 	var crudApp = angular.module('crudApp', ['ngRoute']);
 
-	__webpack_require__(9)(crudApp);
-	__webpack_require__(14)(crudApp);
-	__webpack_require__(16)(crudApp);
+	__webpack_require__(8)(crudApp);
+	__webpack_require__(13)(crudApp);
+	__webpack_require__(15)(crudApp);
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(8);
+	__webpack_require__(7);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/**
@@ -35796,27 +35800,27 @@
 
 
 /***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(9)(app);
+	  __webpack_require__(11)(app);
+	  __webpack_require__(13)(app);
+	};
+
+
+/***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
 	  __webpack_require__(10)(app);
-	  __webpack_require__(12)(app);
-	  __webpack_require__(14)(app);
 	};
 
 
 /***/ },
 /* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(app) {
-	  __webpack_require__(11)(app);
-	};
-
-
-/***/ },
-/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -35830,16 +35834,16 @@
 
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-	  __webpack_require__(13)(app);
+	  __webpack_require__(12)(app);
 	};
 
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -35853,16 +35857,16 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-	  __webpack_require__(15)(app);
+	  __webpack_require__(14)(app);
 	};
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -35917,7 +35921,7 @@
 
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';

@@ -51,8 +51,8 @@
 	var crudApp = angular.module('crudApp', ['ngRoute']);
 
 	__webpack_require__(5)(crudApp);
-	__webpack_require__(10)(crudApp);
-	__webpack_require__(12)(crudApp);
+	__webpack_require__(11)(crudApp);
+	__webpack_require__(13)(crudApp);
 
 
 /***/ },
@@ -32626,8 +32626,8 @@
 
 	module.exports = function(app) {
 	  __webpack_require__(6)(app);
-	  __webpack_require__(8)(app);
-	  __webpack_require__(10)(app);
+	  __webpack_require__(9)(app);
+	  __webpack_require__(11)(app);
 	};
 
 
@@ -32637,6 +32637,7 @@
 
 	module.exports = function(app) {
 	  __webpack_require__(7)(app);
+	  __webpack_require__(8)(app);
 	};
 
 
@@ -32645,26 +32646,58 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.controller('ListController', ['$scope','services', function($scope, services) {
+	  app.controller('ListController', ['$scope', '$location', 'services', function($scope, $location, services) {
 	    $scope.customers = services.getCustomers();
 	    this.firstname = '';
 	    this.lastname = '';
 	    this.zipcode = '';
+	    $scope.go = function(path) {
+	      $location.path(path);
+	    };
 	  }]);
 	};
 
 
 /***/ },
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  __webpack_require__(9)(app);
+	  app.controller('editCtrl', function($scope, $rootScope, $location, $routeParams, services, customer) {
+	    var customerID = ($routeParams.customerID) ? parseInt($routeParams.customerID) : 0;
+	    var original = customer || {};
+	    $scope.customer = window.angular.copy(original);
+	    $scope.deleteCustomer = function(customer) {
+	      $location.path('/list');
+	      if (confirm('Are you sure to delete customer number: ' + $scope.customer.customerNumber) == true)
+	        services.deleteCustomer(customer.customerNumber);
+	    };
+	    $scope.go = function(path) {
+	      $location.path(path);
+	    };
+	    $scope.saveCustomer = function(customer) {
+	      if (customerID <= 0) {
+	        services.insertCustomer(customer);
+	      } else {
+	        services.updateCustomer(customerID, customer);
+	      }
+	      $location.path('/list');
+	    };
+	  });
 	};
 
 
 /***/ },
 /* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(10)(app);
+	};
+
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -32678,16 +32711,16 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-	  __webpack_require__(11)(app);
+	  __webpack_require__(12)(app);
 	};
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -32714,7 +32747,7 @@
 	    };
 
 	    obj.insertCustomer = function(customer) {
-	      var id = -1;
+	      var id = 0;
 	      customers.map(function(item) {
 	        if (item.customerNumber > id) id = item.customerNumber;
 	      });
@@ -32742,7 +32775,7 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32756,6 +32789,16 @@
 	      .when('/list', {
 	        templateUrl: '/templates/partials/ListView.html',
 	        controller: 'ListController'
+	      })
+	      .when('/edit-customer/:customerID', {
+	        templateUrl: '/templates/partials/EditView.html',
+	        controller: 'editCtrl',
+	        resolve: {
+	          customer: function(services, $route) {
+	            var customerID = $route.current.params.customerID;
+	            return services.getCustomer(customerID);
+	          }
+	        }
 	      })
 	      .otherwise({
 	        redirectTo: '/'

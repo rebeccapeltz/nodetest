@@ -1,8 +1,10 @@
-<h1>Customers</h1>
-<div class="container">
+<h2>Customers</h2>
 
+<div class="container">
   <div class="row">
-    <div class="twelve column">
+    <!-- <div class="twelve column"> -->
+      <input type="button" class="button-primary" ng-click="go('/edit-customer/0')" value="Add Customer" <div class="container">
+
       <table class="u-full-width">
         <thead>
           <th>First Name</th>
@@ -15,10 +17,14 @@
             <td>{{data.firstname}}</td>
             <td>{{data.lastname}}</td>
             <td>{{data.zipcode}}</td>
-            <td><a href="#/edit-customer/{{data.customerNumber}}" class="btn">&nbsp;Edit Customer</a></td>
+            <td>
+              <a href="#/edit-customer/{{data.customerNumber}}" class="button">Edit Customer</a>
+            </td>
+
           </tr>
         </tbody>
       </table>
     </div>
 
-  </div>
+  <!-- </div> -->
+</div>

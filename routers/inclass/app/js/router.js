@@ -10,6 +10,16 @@ module.exports = function(crudApp) {
         templateUrl: '/templates/partials/ListView.html',
         controller: 'ListController'
       })
+      .when('/edit-customer/:customerID', {
+        templateUrl: '/templates/partials/EditView.html',
+        controller: 'editCtrl',
+        resolve: {
+          customer: function(services, $route) {
+            var customerID = $route.current.params.customerID;
+            return services.getCustomer(customerID);
+          }
+        }
+      })
       .otherwise({
         redirectTo: '/'
       });
