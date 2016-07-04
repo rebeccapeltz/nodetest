@@ -23,6 +23,23 @@ BinaryTree.prototype.findAndProcess = function(val, process) {
   return findHelper(this);
 };
 
+BinaryTree.prototype.min = function() {
+  var min = Number.MAX_VALUE;
+
+  function traverse(node) {
+    if (!node) return;
+    if (typeof node.value === 'string') {
+      min = (node.value.charCodeAt(0) < min) ? node.value : min;
+    } else {
+      min = (node.value < min) ? node.value : min;
+    }
+    traverse(node.left);
+    traverse(node.right);
+  }
+  traverse(this);
+  return min;
+};
+
 //find a node with the value of val else return false
 BinaryTree.prototype.find = function(val) {
   var findHelper = function(node) {
@@ -49,17 +66,7 @@ BinaryTree.prototype.add = function(newNode) {
   }
 };
 
-BinaryTree.prototype.min = function() {
-  var min = Number.MAX_VALUE;
 
-  function traverse(node) {
-    if (!node) return;
-    if (node.value.charCodeAt(0) < min) min = node.value;
-    traverse(node.left);
-    traverse(node.right);
-  }
-  traverse(this);
-};
 
 BinaryTree.prototype.indent = function() {
   function indentHelper(node, indent) {
@@ -149,14 +156,21 @@ root.findAndProcess('/', function(node) {
   node.right = new BinaryTree('2');
 });
 
-console.log(JSON.stringify(root));
-root.indent();
-
-console.log('INFIX', root.printInfix());
-console.log('BREADTH LTR:', JSON.stringify(root.breadthFirstLTR()));
-console.log('Depth of tree from root', root.depth());
-console.log('Pre order: ', root.preOrder());
-//console.log('MIN:', root.min());
+// console.log(JSON.stringify(root));
+// root.indent();
+//
+// console.log('INFIX', root.printInfix());
+// console.log('BREADTH LTR:', JSON.stringify(root.breadthFirstLTR()));
+// console.log('Depth of tree from root', root.depth());
+//console.log('Pre order: ', root.preOrder());
+var root2 = new BinaryTree(1);
+root2.add(new BinaryTree(2));
+root2.find(2).add(new BinaryTree(3));
+root2.find(1).add(new BinaryTree(4));
+root2.find(3).add(new BinaryTree(0));
+console.log('root2', root2);
+console.log('MIN root:', root.min());
+console.log('MIN root2:', root2.min());
 
 
 //
