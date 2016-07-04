@@ -32663,7 +32663,7 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.controller('editCtrl', function($scope, $rootScope, $location, $routeParams, services, customer) {
+	  app.controller('EditController', function($scope, $rootScope, $location, $routeParams, services, customer) {
 	    var customerID = ($routeParams.customerID) ? parseInt($routeParams.customerID) : 0;
 	    var original = customer || {};
 	    $scope.customer = window.angular.copy(original);
@@ -32792,7 +32792,7 @@
 	      })
 	      .when('/edit-customer/:customerID', {
 	        templateUrl: '/templates/partials/EditView.html',
-	        controller: 'editCtrl',
+	        controller: 'EditController',
 	        resolve: {
 	          customer: function(services, $route) {
 	            var customerID = $route.current.params.customerID;

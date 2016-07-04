@@ -19,6 +19,10 @@ describe('crud app tests', () => {
       expect($route.routes['/list'].templateUrl).
       toEqual('/templates/partials/ListView.html');
 
+      expect($route.routes['/edit-customer/:customerID'].controller).toBe('EditController');
+      // expect($route.routes['/edit-customer/:customerID'].templateUrl).
+      // toEqual('/templates/partials/EditView.html');
+
 
       // otherwise redirect to
       expect($route.routes[null].redirectTo).toEqual('/');

@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.controller('editCtrl', function($scope, $rootScope, $location, $routeParams, services, customer) {
+  app.controller('EditController', function($scope, $rootScope, $location, $routeParams, services, customer) {
     var customerID = ($routeParams.customerID) ? parseInt($routeParams.customerID) : 0;
     var original = customer || {};
     $scope.customer = window.angular.copy(original);

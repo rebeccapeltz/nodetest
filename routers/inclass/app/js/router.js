@@ -12,7 +12,7 @@ module.exports = function(crudApp) {
       })
       .when('/edit-customer/:customerID', {
         templateUrl: '/templates/partials/EditView.html',
-        controller: 'editCtrl',
+        controller: 'EditController',
         resolve: {
           customer: function(services, $route) {
             var customerID = $route.current.params.customerID;

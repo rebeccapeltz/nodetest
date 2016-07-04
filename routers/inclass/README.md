@@ -134,7 +134,7 @@ module.exports = function(crudApp) {
 ###### Edit controller
 ``` JavaScript
 module.exports = function(app) {
-  app.controller('editCtrl', function($scope, $rootScope, $location, $routeParams, services, customer) {
+  app.controller('EditController', function($scope, $rootScope, $location, $routeParams, services, customer) {
     var customerID = ($routeParams.customerID) ? parseInt($routeParams.customerID) : 0;
     var original = customer || {};
     $scope.customer = window.angular.copy(original);
@@ -180,5 +180,40 @@ module.exports = function(app) {
     </form>
   </div>
 </div>
+
+```
+###### Router tests
+``` JavaScript
+//require('../app/js/client');
+const angular = require('angular');
+
+require('angular-mocks');
+require(__dirname + '/../app/js/client.js');
+
+describe('crud app tests', () => {
+  beforeEach(() => {
+    angular.mock.module('crudApp');
+
+  });
+
+  it('should map routes to controllers', function() {
+    angular.module('crudApp');
+
+    angular.mock.inject(function($route) {
+
+      expect($route.routes['/list'].controller).toBe('ListController');
+      expect($route.routes['/list'].templateUrl).
+      toEqual('/templates/partials/ListView.html');
+
+      expect($route.routes['/edit-customer/:customerID'].controller).toBe('EditController');
+      // expect($route.routes['/edit-customer/:customerID'].templateUrl).
+      // toEqual('/templates/partials/EditView.html');
+
+
+      // otherwise redirect to
+      expect($route.routes[null].redirectTo).toEqual('/');
+    });
+  });
+});
 
 ```

@@ -44,30 +44,30 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {//require('../app/js/client');
-	const angular = __webpack_require__(2);
+	//require('../app/js/client');
+	const angular = __webpack_require__(1);
 
+	__webpack_require__(3);
 	__webpack_require__(4);
-	__webpack_require__(5);
-	// let ListController;
-	// let $httpBackend;
+
 	describe('crud app tests', () => {
 	  beforeEach(() => {
 	    angular.mock.module('crudApp');
-	    // angular.mock.inject(function($controller, _$httpBackend_) {
-	    //   ListController = new $controller('ListController');
-	    //   $httpBackend = _$httpBackend_;
-	    // });
+
 	  });
 
 	  it('should map routes to controllers', function() {
-	    module('crudApp');
+	    angular.module('crudApp');
 
-	    inject(function($route) {
+	    angular.mock.inject(function($route) {
 
 	      expect($route.routes['/list'].controller).toBe('ListController');
 	      expect($route.routes['/list'].templateUrl).
 	      toEqual('/templates/partials/ListView.html');
+
+	      expect($route.routes['/edit-customer/:customerID'].controller).toBe('EditController');
+	      // expect($route.routes['/edit-customer/:customerID'].templateUrl).
+	      // toEqual('/templates/partials/EditView.html');
 
 
 	      // otherwise redirect to
@@ -76,34 +76,17 @@
 	  });
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)(module)))
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
-
-
-/***/ },
-/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(3);
+	__webpack_require__(2);
 	module.exports = angular;
 
 
 /***/ },
-/* 3 */
+/* 2 */
 /***/ function(module, exports) {
 
 	/**
@@ -31581,7 +31564,7 @@
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports) {
 
 	/**
@@ -34706,30 +34689,30 @@
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(2);
-	__webpack_require__(6);
+	__webpack_require__(1);
+	__webpack_require__(5);
 	var angular = window.angular;
 
 	var crudApp = angular.module('crudApp', ['ngRoute']);
 
-	__webpack_require__(8)(crudApp);
+	__webpack_require__(7)(crudApp);
 	__webpack_require__(13)(crudApp);
 	__webpack_require__(15)(crudApp);
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(7);
+	__webpack_require__(6);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**
@@ -35800,22 +35783,40 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-	  __webpack_require__(9)(app);
+	  __webpack_require__(8)(app);
 	  __webpack_require__(11)(app);
 	  __webpack_require__(13)(app);
 	};
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
+	  __webpack_require__(9)(app);
 	  __webpack_require__(10)(app);
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.controller('ListController', ['$scope', '$location', 'services', function($scope, $location, services) {
+	    $scope.customers = services.getCustomers();
+	    this.firstname = '';
+	    this.lastname = '';
+	    this.zipcode = '';
+	    $scope.go = function(path) {
+	      $location.path(path);
+	    };
+	  }]);
 	};
 
 
@@ -35824,12 +35825,27 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.controller('ListController', ['$scope','services', function($scope, services) {
-	    $scope.customers = services.getCustomers();
-	    this.firstname = '';
-	    this.lastname = '';
-	    this.zipcode = '';
-	  }]);
+	  app.controller('EditController', function($scope, $rootScope, $location, $routeParams, services, customer) {
+	    var customerID = ($routeParams.customerID) ? parseInt($routeParams.customerID) : 0;
+	    var original = customer || {};
+	    $scope.customer = window.angular.copy(original);
+	    $scope.deleteCustomer = function(customer) {
+	      $location.path('/list');
+	      if (confirm('Are you sure to delete customer number: ' + $scope.customer.customerNumber) == true)
+	        services.deleteCustomer(customer.customerNumber);
+	    };
+	    $scope.go = function(path) {
+	      $location.path(path);
+	    };
+	    $scope.saveCustomer = function(customer) {
+	      if (customerID <= 0) {
+	        services.insertCustomer(customer);
+	      } else {
+	        services.updateCustomer(customerID, customer);
+	      }
+	      $location.path('/list');
+	    };
+	  });
 	};
 
 
@@ -35893,7 +35909,7 @@
 	    };
 
 	    obj.insertCustomer = function(customer) {
-	      var id = -1;
+	      var id = 0;
 	      customers.map(function(item) {
 	        if (item.customerNumber > id) id = item.customerNumber;
 	      });
@@ -35935,6 +35951,16 @@
 	      .when('/list', {
 	        templateUrl: '/templates/partials/ListView.html',
 	        controller: 'ListController'
+	      })
+	      .when('/edit-customer/:customerID', {
+	        templateUrl: '/templates/partials/EditView.html',
+	        controller: 'EditController',
+	        resolve: {
+	          customer: function(services, $route) {
+	            var customerID = $route.current.params.customerID;
+	            return services.getCustomer(customerID);
+	          }
+	        }
 	      })
 	      .otherwise({
 	        redirectTo: '/'
