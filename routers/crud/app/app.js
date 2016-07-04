@@ -1,7 +1,7 @@
 //paging: http://stackoverflow.com/questions/19409492/how-to-achieve-pagination-table-layout-with-angular-js
 var app = angular.module('myApp', ['ngRoute']);
 
-app.factory("services", ['$http', function($http) {
+app.factory('services', ['$http', function($http) {
   var customers = [];
   var loaded = false;
 
@@ -57,7 +57,55 @@ app.factory("services", ['$http', function($http) {
 app.controller('listCtrl', function($scope, services) {
   services.getCustomers().then(function(data) {
     $scope.customers = data;
+    $scope.gap = Math.min($scope.gap,$scope.customers.data/$scope.gap);
+    $scope.groupToPages();
   });
+  $scope.gap = 5;
+  $scope.itemsPerPage = 5;
+  $scope.pagedItems = [];
+  $scope.currentPage = 0;
+  $scope.range = function(size, start, end) {
+    var ret = [];
+    console.log(size, start, end);
+
+    if (size < end) {
+      end = size;
+      start = size - $scope.gap;
+    }
+    for (var i = start; i < end; i++) {
+      ret.push(i);
+    }
+    console.log(ret);
+    return ret;
+  };
+
+  $scope.prevPage = function() {
+    if ($scope.currentPage > 0) {
+      $scope.currentPage--;
+    }
+  };
+
+  $scope.nextPage = function() {
+    if ($scope.currentPage < $scope.pagedItems.length - 1) {
+      $scope.currentPage++;
+    }
+  };
+
+  $scope.setPage = function() {
+    $scope.currentPage = this.n;
+  };
+  $scope.groupToPages = function() {
+    $scope.pagedItems = [];
+
+    for (var i = 0; i < $scope.customers.length; i++) {
+      if (i % $scope.itemsPerPage === 0) {
+        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [$scope.customers[i]];
+      } else {
+        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.customers[i]);
+      }
+    }
+  };
+
 });
 
 app.controller('editCtrl', function($scope, $rootScope, $location, $routeParams, services, customer) {
@@ -75,7 +123,7 @@ app.controller('editCtrl', function($scope, $rootScope, $location, $routeParams,
 
   $scope.deleteCustomer = function(customer) {
     $location.path('/');
-    if (confirm("Are you sure to delete customer number: " + $scope.customer._id) == true)
+    if (confirm('Are you sure to delete customer number: ' + $scope.customer._id) == true)
       services.deleteCustomer(customer.customerNumber);
   };
 
@@ -94,10 +142,10 @@ app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
     when('/', {
-        title: 'Customers',
-        templateUrl: 'partials/customers.html',
-        controller: 'listCtrl'
-      })
+      title: 'Customers',
+      templateUrl: 'partials/customers.html',
+      controller: 'listCtrl'
+    })
       .when('/customers', {
         title: 'Customers',
         templateUrl: 'partials/customers.html',
