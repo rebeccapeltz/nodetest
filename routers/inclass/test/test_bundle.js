@@ -66,8 +66,8 @@
 	      toEqual('/templates/partials/ListView.html');
 
 	      expect($route.routes['/edit-customer/:customerID'].controller).toBe('EditController');
-	      // expect($route.routes['/edit-customer/:customerID'].templateUrl).
-	      // toEqual('/templates/partials/EditView.html');
+	      expect($route.routes['/edit-customer/:customerID'].templateUrl).
+	      toEqual('/templates/partials/EditView.html');
 
 
 	      // otherwise redirect to
