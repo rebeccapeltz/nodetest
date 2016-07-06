@@ -315,6 +315,15 @@ BinarySearchTree.prototype.isBST = function() {
   }
   return (isBSTUtil(this, Number.MIN_VALUE, Number.MAX_VALUE));
 };
+BinarySearchTree.prototype.indent = function() {
+  function indentHelper(node, indent) {
+    if (!node) return; //base
+    console.log(indent + node.value); //location of operation
+    indentHelper(node.left, indent + ' ');
+    indentHelper(node.right, indent + ' ');
+  }
+  indentHelper(this, ' ');
+};
 
 BinarySearchTree.prototype.closestElement = function(value) {
   function closestElementHelper(root, value, closestNode) {
@@ -353,6 +362,7 @@ console.log('IS BST', bst2.isBST());
 console.log('CLOSEST VALUE', 4, bst2.closestElement(4));
 console.log('CLOSEST VALUE', 9, bst2.closestElement(9));
 console.log('CLOSEST VALUE', 8, bst2.closestElement(8));
+console.log(bst2.indent());
 
 /*
 BREADTHFIRST LTR [ 10, 5, 20, 3, 8, 30, 9 ]
