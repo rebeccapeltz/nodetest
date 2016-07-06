@@ -16,6 +16,29 @@ BinarySearchTree.prototype.add = function(node) {
   return this;
 };
 
+BinarySearchTree.prototype.add2 = function(node) {
+  this.insert2(node, this);
+  return this;
+};
+
+BinarySearchTree.prototype.insert2 = function(newNode, node) {
+  //var value = newNode.value;
+  //var traverse = function(node) {
+  if (newNode.value > node.value) {
+    if (!node.right) {
+      node.right = newNode;
+      return;
+    } else this.insert2(node.right);
+  } else if (newNode.value < node.value) {
+    if (!node.left) {
+      node.left = newNode;
+      return;
+    } else this.insert2(node.left);
+  }
+  //};
+  //traverse(this);
+};
+
 BinarySearchTree.prototype.insert = function(newNode) {
   var value = newNode.value;
   var traverse = function(node) {
@@ -270,21 +293,66 @@ BinarySearchTree.prototype.convertToLinkedList = function() {
   }
   return list;
 };
+/* Returns true if the given tree is a binary search tree
+ (efficient version). */
+BinarySearchTree.prototype.isBST = function() {
+  /* Returns true if the given tree is a BST and its
+   values are >= min and <= max. */
+  function isBSTUtil(node, min, max) {
+    /* an empty tree is BST */
+    if (node == null)
+      return 1;
+
+    /* false if this node violates the min/max constraint */
+    if (node.value < min || node.value > max)
+      return 0;
+
+    /* otherwise check the subtrees recursively,
+     tightening the min or max constraint */
+
+    // Allow only distinct values
+    return isBSTUtil(node.left, min, (node.value - 1)) && isBSTUtil(node.right, (node.value + 1), max);
+  }
+  return (isBSTUtil(this, Number.MIN_VALUE, Number.MAX_VALUE));
+};
+
+BinarySearchTree.prototype.closestElement = function(value) {
+  function closestElementHelper(root, value, closestNode) {
+    if (root == null) return closestNode;
+    if (root.value == value) return root;
+    var closerToRoot = closestNode &&  Math.abs(root.value - value) < Math.abs(closestNode.value - value);
+    if (closestNode == null || closerToRoot) closestNode = root;
+
+    if (value < root.value) return closestElementHelper(root.left, value, closestNode);
+    else return closestElementHelper(root.right, value, closestNode);
+
+  }
+  //find the node with the closest value
+  var closest =  closestElementHelper(this, value, null);
+  return closest && closest.value;
+};
+
+
+
 
 //TESTS
 
-var bst = new BinarySearchTree(40);
-bst.add(new BinarySearchTree(25)).add(new BinarySearchTree(78)).add(new BinarySearchTree(10)).add(new BinarySearchTree(32));
-console.log('BS1', bst);
+// var bst = new BinarySearchTree(40);
+// bst.add(new BinarySearchTree(25)).add(new BinarySearchTree(78)).add(new BinarySearchTree(10)).add(new BinarySearchTree(32));
+// console.log('BS1', bst);
 
 var bst2 = new BinarySearchTree(10);
-bst2.add(new BinarySearchTree(20)).add(new BinarySearchTree(30)).add(new BinarySearchTree(5)).add(new BinarySearchTree(8)).add(new BinarySearchTree(3)).add(new BinarySearchTree(9));
-console.log('BST2', bst2);
-console.log('BREADTHFIRST LTR', bst2.breadthFirstLTR());
-console.log('BREADTHFIRST RTL', bst2.breadthFirstRTL());
-console.log('PREORDER', bst2.preOrder());
-console.log('INORDER', bst2.inOrder());
-console.log('POSTORDER', bst2.postOrder());
+bst2.add2(new BinarySearchTree(20)).add(new BinarySearchTree(30)).add(new BinarySearchTree(5)).add(new BinarySearchTree(8)).add(new BinarySearchTree(3)).add(new BinarySearchTree(9));
+// console.log('BST2', bst2);
+// console.log('BREADTHFIRST LTR', bst2.breadthFirstLTR());
+// console.log('BREADTHFIRST RTL', bst2.breadthFirstRTL());
+// console.log('PREORDER', bst2.preOrder());
+// console.log('INORDER', bst2.inOrder());
+// console.log('POSTORDER', bst2.postOrder());
+console.log('IS BST', bst2.isBST());
+console.log('CLOSEST VALUE', 4, bst2.closestElement(4));
+console.log('CLOSEST VALUE', 9, bst2.closestElement(9));
+console.log('CLOSEST VALUE', 8, bst2.closestElement(8));
 
 /*
 BREADTHFIRST LTR [ 10, 5, 20, 3, 8, 30, 9 ]
@@ -294,35 +362,35 @@ INORDER [ 3, 5, 8, 9, 10, 20, 30 ]
 POSTORDER [ 3, 9, 8, 5, 30, 20, 10 ]
 */
 
-var bst3 = new BinarySearchTree('j');
-bst3.add(new BinarySearchTree('f')).add(new BinarySearchTree('k')).add(new BinarySearchTree('z')).add(new BinarySearchTree('a')).add(new BinarySearchTree('h')).add(new BinarySearchTree('d'));
-console.log(JSON.stringify(bst3));
-console.log('BREADTHFIRST LTR', bst3.breadthFirstLTR());
-console.log('BREADTHFIRST RTL', bst3.breadthFirstRTL());
-console.log('PREORDER', bst3.preOrder());
-console.log('INORDER', bst3.inOrder());
-console.log('POSTORDER', bst3.postOrder());
-
-/*
-BREADTHFIRST LTR [ 'j', 'f', 'k', 'a', 'h', 'z', 'd' ]
-BREADTHFIRST RTL [ 'j', 'k', 'f', 'z', 'h', 'a', 'd' ]
-PREORDER [ 'j', 'f', 'a', 'd', 'h', 'k', 'z' ]
-INORDER [ 'a', 'd', 'f', 'h', 'j', 'k', 'z' ]
-POSTORDER [ 'd', 'a', 'h', 'f', 'z', 'k', 'j' ]
- */
-
-
-console.log(bst2.findMin()); // 3
-console.log(bst2.findMax()); // 30
-console.log(bst2.contains(15));
-bst2.add(new BinarySearchTree(new BinarySearchTree(55)));
-bst2.add(new BinarySearchTree(new BinarySearchTree(65)));
-bst3.add(new BinarySearchTree(new BinarySearchTree(75)));
-console.log(bst2);
-console.log(bst2.getDepth()); // 3
-console.log(bst2.add(new BinarySearchTree(7)).add(new BinarySearchTree(50)).add(new BinarySearchTree(80)).add(new BinarySearchTree(98)));
-console.log(bst2.getDepth()); // 5
-console.log(bst2.nodeAverages()); //[ 10, 12.5, 13.67, 22, 80, 98 ]
+// var bst3 = new BinarySearchTree('j');
+// bst3.add(new BinarySearchTree('f')).add(new BinarySearchTree('k')).add(new BinarySearchTree('z')).add(new BinarySearchTree('a')).add(new BinarySearchTree('h')).add(new BinarySearchTree('d'));
+// console.log(JSON.stringify(bst3));
+// console.log('BREADTHFIRST LTR', bst3.breadthFirstLTR());
+// console.log('BREADTHFIRST RTL', bst3.breadthFirstRTL());
+// console.log('PREORDER', bst3.preOrder());
+// console.log('INORDER', bst3.inOrder());
+// console.log('POSTORDER', bst3.postOrder());
+//
+// /*
+// BREADTHFIRST LTR [ 'j', 'f', 'k', 'a', 'h', 'z', 'd' ]
+// BREADTHFIRST RTL [ 'j', 'k', 'f', 'z', 'h', 'a', 'd' ]
+// PREORDER [ 'j', 'f', 'a', 'd', 'h', 'k', 'z' ]
+// INORDER [ 'a', 'd', 'f', 'h', 'j', 'k', 'z' ]
+// POSTORDER [ 'd', 'a', 'h', 'f', 'z', 'k', 'j' ]
+//  */
+//
+//
+// console.log(bst2.findMin()); // 3
+// console.log(bst2.findMax()); // 30
+// console.log(bst2.contains(15));
+// bst2.add(new BinarySearchTree(new BinarySearchTree(55)));
+// bst2.add(new BinarySearchTree(new BinarySearchTree(65)));
+// //bst3.add(new BinarySearchTree(new BinarySearchTree(75)));
+// console.log(bst2);
+// console.log(bst2.getDepth()); // 3
+// console.log(bst2.add(new BinarySearchTree(7)).add(new BinarySearchTree(50)).add(new BinarySearchTree(80)).add(new BinarySearchTree(98)));
+// console.log(bst2.getDepth()); // 5
+// console.log(bst2.nodeAverages()); //[ 10, 12.5, 13.67, 22, 80, 98 ]
 //
 // console.log(bst2.convertToLinkedList());
 //[ 3, 5, 7, 8, 9, 10, 20, 30, 50, 80, 98 ]
