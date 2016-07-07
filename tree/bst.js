@@ -12,51 +12,39 @@ function BinarySearchTree(value) {
 
 
 BinarySearchTree.prototype.add = function(node) {
-  this.insert(node);
+  this.insert(node, this);
   return this;
 };
 
-BinarySearchTree.prototype.add2 = function(node) {
-  this.insert2(node, this);
-  return this;
-};
+BinarySearchTree.prototype.insert = function(node) {
+  var currentNode;
+  var inserted = false;
 
-BinarySearchTree.prototype.insert2 = function(newNode, node) {
-  //var value = newNode.value;
-  //var traverse = function(node) {
-  if (newNode.value > node.value) {
-    if (!node.right) {
-      node.right = newNode;
-      return;
-    } else this.insert2(node.right);
-  } else if (newNode.value < node.value) {
-    if (!node.left) {
-      node.left = newNode;
-      return;
-    } else this.insert2(node.left);
-  }
-  //};
-  //traverse(this);
-};
+  currentNode = this;
 
-BinarySearchTree.prototype.insert = function(newNode) {
-  var value = newNode.value;
-  var traverse = function(node) {
-    if (value > node.value) {
-      if (!node.right) {
-        node.right = newNode;
-        return;
-      } else traverse(node.right);
-    } else if (value < node.value) {
-      if (!node.left) {
-        node.left = newNode;
-        return;
-      } else traverse(node.left);
+  while (!inserted) {
+    if (node.value < currentNode.value) {
+      if (currentNode.left === null) {
+        currentNode.left = node;
+        inserted = true;
+        break;
+      } else {
+        currentNode = currentNode.left;
+      }
+    } else if (node.value > currentNode.value) {
+      if (currentNode.right === null) {
+        currentNode.right = node;
+        inserted = true;
+        break;
+      } else {
+        currentNode = currentNode.right;
+      }
+    } else {
+      break;
     }
-  };
-  traverse(this);
-};
 
+  }
+};
 // BinarySearchTree.prototype.remove = function(node) {
 //
 // }
@@ -323,13 +311,32 @@ BinarySearchTree.prototype.indent = function() {
     indentHelper(node.right, indent + ' ');
   }
   indentHelper(this, ' ');
+  return '---------';
+};
+
+
+BinarySearchTree.addSorted = function(arr) {
+  function createBalancedBinaryTree(arr, start, end) {
+
+    if (start > end)
+      return null;
+
+    // var mid = (start + end)/2; //avoid for overflow
+    var mid = start + (end - start) / 2;
+    var root = new BinarySearchTree(arr[mid]);
+    root.left = createBalancedBinaryTree(arr, start, mid - 1);
+    root.right = createBalancedBinaryTree(arr, mid + 1, end);
+    return root;
+  }
+
+  return createBalancedBinaryTree(arr, 0, arr.length-1);
 };
 
 BinarySearchTree.prototype.closestElement = function(value) {
   function closestElementHelper(root, value, closestNode) {
     if (root == null) return closestNode;
     if (root.value == value) return root;
-    var closerToRoot = closestNode &&  Math.abs(root.value - value) < Math.abs(closestNode.value - value);
+    var closerToRoot = closestNode && Math.abs(root.value - value) < Math.abs(closestNode.value - value);
     if (closestNode == null || closerToRoot) closestNode = root;
 
     if (value < root.value) return closestElementHelper(root.left, value, closestNode);
@@ -337,7 +344,7 @@ BinarySearchTree.prototype.closestElement = function(value) {
 
   }
   //find the node with the closest value
-  var closest =  closestElementHelper(this, value, null);
+  var closest = closestElementHelper(this, value, null);
   return closest && closest.value;
 };
 
@@ -351,7 +358,8 @@ BinarySearchTree.prototype.closestElement = function(value) {
 // console.log('BS1', bst);
 
 var bst2 = new BinarySearchTree(10);
-bst2.add2(new BinarySearchTree(20)).add(new BinarySearchTree(30)).add(new BinarySearchTree(5)).add(new BinarySearchTree(8)).add(new BinarySearchTree(3)).add(new BinarySearchTree(9));
+
+bst2.add(new BinarySearchTree(20)).add(new BinarySearchTree(30)).add(new BinarySearchTree(5)).add(new BinarySearchTree(8)).add(new BinarySearchTree(3)).add(new BinarySearchTree(9));
 // console.log('BST2', bst2);
 // console.log('BREADTHFIRST LTR', bst2.breadthFirstLTR());
 // console.log('BREADTHFIRST RTL', bst2.breadthFirstRTL());
@@ -363,6 +371,11 @@ console.log('CLOSEST VALUE', 4, bst2.closestElement(4));
 console.log('CLOSEST VALUE', 9, bst2.closestElement(9));
 console.log('CLOSEST VALUE', 8, bst2.closestElement(8));
 console.log(bst2.indent());
+
+//var arr = [1, 2, 3, 4, 5, 6, 7];
+//var bst7 = BinarySearchTree.addSorted(arr);
+//console.log('bst7',bst7);
+//console.log('BST 7', bst7.indent());
 
 /*
 BREADTHFIRST LTR [ 10, 5, 20, 3, 8, 30, 9 ]
