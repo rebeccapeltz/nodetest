@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const fs = require('fs');
 const http = require('http');
@@ -8,8 +8,8 @@ http.createServer((req, res) => {
   //TODO req error
   req.on('error', (err) => {
     res.statusCode = 400;
-    res.end("Request Error\n");
-  })
+    res.end('Request Error' + err + '\n');
+  });
 
   //TODO res error
 
@@ -30,43 +30,43 @@ http.createServer((req, res) => {
         //write to file
         //handle write error
 
-          var file = fs.createWriteStream(__dirname + '/data/test.json');
-          file.on('error', (err)=>{
-            res.statusCode = 400;
-            console.log(err + "error writing\n");
-            res.end("error writing json\n");
-          });
+        var file = fs.createWriteStream(__dirname + '/data/test.json');
+        file.on('error', (err) => {
+          res.statusCode = 400;
+          console.log(err + 'error writing\n');
+          res.end('error writing json\n');
+        });
 
-          file.write(JSON.stringify(jsonData));
-          file.end();
-          res.end(bufArr.toString() + '\n');
+        file.write(JSON.stringify(jsonData));
+        file.end();
+        res.end(bufArr.toString() + '\n');
 
       } catch (e) {
         res.statusCode = 400;
-        console.log("error parsing json\n");
-        res.end("error parsing json\n");
+        console.log('error parsing json\n');
+        res.end('error parsing json\n');
       }
 
     });
   } else if (req.method === 'GET') {
     // read data
 
-      var file = fs.createReadStream(__dirname + '/data/test.json');
-      var bufArr = [];
-      file.on('error', (err) =>{
-        res.statusCode = 400;
-        res.end("can't find/open/read file");
+    var file = fs.createReadStream(__dirname + '/data/test.json');
+    var bufArr = [];
+    file.on('error', (err) => {
+      res.statusCode = 400;
+      res.end('can\'t find/open/read file'+ err);
+    });
+    file.on('data', (data) => {
+      bufArr.push(data);
+    });
+    file.on('end', () => {
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
       });
-      file.on('data', (data) => {
-        bufArr.push(data);
-      });
-      file.on('end', () => {
-        res.writeHead(200, {
-          "Content-Type": "application/json"
-        });
-        res.end(bufArr.toString() + '\n');
+      res.end(bufArr.toString() + '\n');
 
-      });
+    });
 
 
     //respond with data
@@ -74,7 +74,7 @@ http.createServer((req, res) => {
 
   } else {
     res.status = 404;
-    res.end("Not found.\n");
+    res.end('Not found.\n');
   } //TODO else 404
 
 }).listen(3000, () => {

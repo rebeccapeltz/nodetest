@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const fs = require('fs');
 const http = require('http');
@@ -9,7 +9,7 @@ http.createServer((req, res) => {
   //TODO req error
   req.on('error', (err) => {
     res.statusCode = 400;
-    res.end("Request Error\n");
+    res.end('Request Error\n');
   })
 
   //TODO res error
@@ -24,18 +24,18 @@ http.createServer((req, res) => {
     req.on('end', () => {
       //parse json
       jsonPromise(bufArr.toString()).then((data) => {
-        console.log("promise resolve", JSON.stringify(data));
+        console.log('promise resolve', JSON.stringify(data));
         return data;
       }, (err) => {
-        console.log("promise reject", err);
+        console.log('promise reject', err);
         res.statusCode = 400;
-        res.end("JSON parse fail\n");
+        res.end('JSON parse fail\n');
       }).then((data) => {
         var file = fs.createWriteStream(__dirname + '/data/test.json');
         file.on('error', (err) => {
           res.statusCode = 400;
-          console.log(err + "error writing\n");
-          res.end("error writing json\n");
+          console.log(err + 'error writing\n');
+          res.end('error writing json\n');
         });
 
         file.write(JSON.stringify(data));
@@ -53,8 +53,8 @@ http.createServer((req, res) => {
       //   var file = fs.createWriteStream(__dirname + '/data/test.json');
       //   file.on('error', (err) => {
       //     res.statusCode = 400;
-      //     console.log(err + "error writing\n");
-      //     res.end("error writing json\n");
+      //     console.log(err + 'error writing\n');
+      //     res.end('error writing json\n');
       //   });
       //
       //   file.write(JSON.stringify(jsonData));
@@ -63,8 +63,8 @@ http.createServer((req, res) => {
       //
       // } catch (e) {
       //   res.statusCode = 400;
-      //   console.log("error parsing json\n");
-      //   res.end("error parsing json\n");
+      //   console.log('error parsing json\n');
+      //   res.end('error parsing json\n');
       // }
 
     });
@@ -75,14 +75,14 @@ http.createServer((req, res) => {
     var bufArr = [];
     file.on('error', (err) => {
       res.statusCode = 400;
-      res.end("can't find/open/read file");
+      res.end('can\'t find/open/read file'+ err);
     });
     file.on('data', (data) => {
       bufArr.push(data);
     });
     file.on('end', () => {
       res.writeHead(200, {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       });
       res.end(bufArr.toString() + '\n');
     });
@@ -93,7 +93,7 @@ http.createServer((req, res) => {
 
   } else {
     res.status = 404;
-    res.end("Not found.\n");
+    res.end('Not found.\n');
   } //TODO else 404
 
 }).listen(3000, () => {
