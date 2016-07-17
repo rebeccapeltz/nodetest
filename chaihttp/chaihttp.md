@@ -9,7 +9,7 @@ https://github.com/chaijs/chai-http
   npm install mocha --save-dev
   npm install chai --save-dev
   npm install chai-http --save-dev
-  ```
+
 
 ``` JavaScript
 const chai = require('chai');           // require chai for expect testing
@@ -61,7 +61,7 @@ describe('HTTP server test', function() {
   });
 });
 ```
-      s
+
 
 
 ##### Using node-inspector to debug
