@@ -4,10 +4,6 @@ var http = require('http');
 http.createServer(function(req, res) {
   if (req.method === 'GET') {
     res.write('get');
-    // res.writeHead(404, {
-    //   'Content-Type': 'text/html'
-    // });
-    // res.write('Not found');
     res.end();
   }
   if (req.method === 'POST') {
