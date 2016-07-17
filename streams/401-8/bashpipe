@@ -22,4 +22,4 @@ var myREPL = child.spawn('node'),
  });
 
 //https://docs.nodejitsu.com/articles/advanced/streams/how-to-use-stream-pipe/
-//source bashpipe
+//chmod + bashpipe
