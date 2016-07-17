@@ -3,7 +3,7 @@ var child = require('child_process');
 var fs = require('fs');
 
 var myREPL = child.spawn('node'),
-     myFile = fs.createWriteStream(__dirname +'myOutput.txt');
+     myFile = fs.createWriteStream(__dirname +'/myOutput.txt');
 
  myREPL.stdout.pipe(process.stdout, { end: false });
  myREPL.stdout.pipe(myFile);
