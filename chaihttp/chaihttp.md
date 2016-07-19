@@ -1,7 +1,5 @@
-#### Chai HTTP will let us call http requests and send in chai expects
-
-https://github.com/chaijs/chai-http  
-
+#### Chai HTTP will let us call http requests and send in chai expects  
+https://github.com/chaijs/chai-http    
 ###### setting up the required code
 
 ```
@@ -113,8 +111,6 @@ function getDay(input) {
 }
 
 ```
-
-
 ##### Using node-inspector to debug
 http://blog.andrewray.me/how-to-debug-mocha-tests-with-chrome/
 
