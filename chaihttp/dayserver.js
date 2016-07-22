@@ -11,6 +11,14 @@ http.createServer(function(req, res) {
     res.end();
   } else if (req.method === 'POST') {
     processPost(req, res);
+    // var body = '';  //anything concatenated to this will be 'toStringed'
+    // req.on('data', function(data) {
+    //   body += data;
+    // });
+    // req.on('end', function() {
+    //   res.write(getDay(JSON.parse(body)) + '\n'); //status is 200 by default
+    //   res.end();
+    // });
   }
 }).listen(3000, console.log('up on 3000'));
 
