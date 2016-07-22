@@ -1,25 +1,30 @@
 #!/usr/bin/env node
+
 var child = require('child_process');
 var fs = require('fs');
 
 var myREPL = child.spawn('node'),
-     myFile = fs.createWriteStream(__dirname +'/myOutput.txt');
+  myFile = fs.createWriteStream(__dirname + '/myOutput.txt');
 
- myREPL.stdout.pipe(process.stdout, { end: false });
- myREPL.stdout.pipe(myFile);
+myREPL.stdout.pipe(process.stdout, {
+  end: false
+});
+myREPL.stdout.pipe(myFile);
 
- process.stdin.resume();
+process.stdin.resume();
 
- process.stdin.pipe(myREPL.stdin, { end: false });
- process.stdin.pipe(myFile);
+process.stdin.pipe(myREPL.stdin, {
+  end: false
+});
+process.stdin.pipe(myFile);
 
- myREPL.stdin.on("end", function() {
-   process.stdout.write("REPL stream ended.");
- });
+myREPL.stdin.on('end', function() {
+  process.stdout.write('REPL stream ended.');
+});
 
- myREPL.on('exit', function (code) {
-   process.exit(code);
- });
+myREPL.on('exit', function(code) {
+  process.exit(code);
+});
 
 //https://docs.nodejitsu.com/articles/advanced/streams/how-to-use-stream-pipe/
 //chmod + bashpipe
