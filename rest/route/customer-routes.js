@@ -3,12 +3,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();  //need the json functionality of the body parser
-const Customer = require('../models/customer');   //model
+const debug = require('debug')('http');
+const Customer = require('../model/customer');   //model
 
 const customerRouter = module.exports = exports = express.Router();
 
 //GET returns a list of 0 or more or error
 customerRouter.get('/', (req, res, next) => {
+  debug(req.method + ' ' + req.url);
   Customer.find({}, (err, customers) => {   //mongoose find
     if(err) return next(err);
     res.json(customers);  //return customers as json
@@ -17,6 +19,7 @@ customerRouter.get('/', (req, res, next) => {
 
 //POST returns the posted object with an id or error
 customerRouter.post('/', jsonParser, (req, res, next) => {
+  debug(req.method + ' ' + req.url);
   let newCustomer = new Customer(req.body);
   newCustomer.save((err, customer) => {   //save on the instance
     if(err) return next(err);
@@ -24,9 +27,21 @@ customerRouter.post('/', jsonParser, (req, res, next) => {
   });
 });
 
+//GET single customer by id or error
+customerRouter.get('/:id', (req, res, next) => {
+  debug(req.method + ' ' + req.url);
+  let _id = req.params.id;
+  Customer.findOne({_id}, (err,customer) => {
+    if(err) return next(err);
+    console.log('get route',customer);
+    res.json(customer);
+  });
+});
+
 //PUT returns success or error
-customerRouter.put('/', jsonParser, (req, res, next) => {
-  let _id = req.body._id;  //existing object has an id
+customerRouter.put('/:id', jsonParser, (req, res, next) => {
+  debug(req.method + ' ' + req.url);
+  let _id = req.params.id;
   Customer.findOneAndUpdate({_id}, req.body, (err) => {
     if(err) return next(err);
     let message = 'success';
@@ -34,8 +49,9 @@ customerRouter.put('/', jsonParser, (req, res, next) => {
   });
 });
 
-//PUT returns success or error
+//DELETE returns success or error
 customerRouter.delete('/:id', (req, res, next) => {
+  debug(req.method + ' ' + req.url);
   let _id = req.params.id;
   Customer.findOneAndRemove({_id}, (err) => {
     if(err) return next(err);

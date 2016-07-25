@@ -2,6 +2,7 @@
 npm install express --save
 npm install morgan --save
 npm install body-parser --save-dev
+npm install debug --save-dev
 
 create a Schema
 create a server

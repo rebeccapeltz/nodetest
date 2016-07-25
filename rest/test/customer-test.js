@@ -3,7 +3,7 @@
 const chai = require('chai');
 const chaiHTTP = require('chai-http');
 const mongoose = require('mongoose');
-const Customer = require('../models/customer');
+const Customer = require('../model/customer');
 chai.use(chaiHTTP);
 
 const expect = chai.expect;
@@ -44,6 +44,7 @@ describe('Testing CRUD routes Customer', () => {
     .post('/api/customer/')
     .send({name: 'testname', active: true, year_added: 2106})
     .end((err, res) => {
+      console.log('posted', res.body);
       expect(err).to.eql(null);
       expect(res).to.have.status(200);
       expect(res.body.name).to.eql('testname');
@@ -54,18 +55,32 @@ describe('Testing CRUD routes Customer', () => {
 
   describe('tests that need a customer', () => {
     let testCustomer;
-    beforeEach((done) => {
+    before((done) => {
       testCustomer = new Customer({name: 'customertest', active: false, year_added: 2015});
       testCustomer.save((err, customer) => {
+        console.log('saved',testCustomer);
         testCustomer = customer;
         done();
       });
     });
 
-    it('should PUT a message', (done) => {
+    it('should GET a single customer', (done) => {
+      request('localhost:3000')
+      .get('/api/customer/' + testCustomer._id)
+      .end((err, res) => {
+
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        console.log('getted',res.body);
+        expect(res.body._id).to.eql(testCustomer._id.toString());
+        done();
+      });
+    });
+
+    it('should PUT a customer field change', (done) => {
       testCustomer.active = true;
       request('localhost:3000')
-      .put('/api/customer/')
+      .put('/api/customer/' + testCustomer._id)
       .send(testCustomer)
       .end((err, res) => {
         expect(err).to.eql(null);
@@ -75,7 +90,7 @@ describe('Testing CRUD routes Customer', () => {
       });
     });
 
-    it('should DELETE a message', (done) => {
+    it('should DELETE a customer', (done) => {
       request('localhost:3000')
       .delete('/api/customer/' + testCustomer._id)
       .end((err, res) => {
