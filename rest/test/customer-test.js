@@ -56,7 +56,7 @@ describe('Testing CRUD routes Customer', () => {
   describe('tests that need a customer', () => {
     let testCustomer;
     before((done) => {
-      testCustomer = new Customer({name: 'customertest', active: false, year_added: 2015});
+      testCustomer = Customer({name: 'customertest', active: false, year_added: 2015});
       testCustomer.save((err, customer) => {
         console.log('saved',testCustomer);
         testCustomer = customer;
@@ -71,7 +71,9 @@ describe('Testing CRUD routes Customer', () => {
 
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        console.log('getted',res.body);
+        //console.log('getted',res.body);
+        expect(res.body.year_added).to.equal(2015);
+        expect(res.body.active).to.eql(false);
         expect(res.body._id).to.eql(testCustomer._id.toString());
         done();
       });
@@ -83,6 +85,7 @@ describe('Testing CRUD routes Customer', () => {
       .put('/api/customer/' + testCustomer._id)
       .send(testCustomer)
       .end((err, res) => {
+        console.log('putted',res.body);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.body.message).to.eql('success');

@@ -20,8 +20,8 @@ customerRouter.get('/', (req, res, next) => {
 //POST returns the posted object with an id or error
 customerRouter.post('/', jsonParser, (req, res, next) => {
   debug(req.method + ' ' + req.url);
-  let newCustomer = new Customer(req.body);
-  newCustomer.save((err, customer) => {   //save on the instance
+  //let newCustomer = new Customer(req.body);  //don't need new 
+  Customer(req.body).save((err, customer) => {   //save on the instance
     if(err) return next(err);
     res.json(customer);  //customer has an _id now
   });
