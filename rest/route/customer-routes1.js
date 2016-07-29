@@ -5,11 +5,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json(); //need the json functionality of the body parser
-//const http = require('http');
 const Debug = require('debug');
 var debug = Debug('routes');
-//debug('some string');
-const Customer = require('../model/customer'); //model
+const Customer = require('../model/customer1'); //model
 
 const customerRouter = module.exports = exports = express.Router();
 

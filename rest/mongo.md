@@ -17,25 +17,26 @@ ls /usr/local/bin/mo*
 /usr/local/bin/mongoimport	/usr/local/bin/mongotop
 /usr/local/bin/mongooplog
 
-</pre
+</pre>
 
 Mongo server demon: mongod  
 Mongo CLI: mongo
 
 https://scotch.io/tutorials/an-introduction-to-mongodb
 
-Create a 'db' folder in your project and start mongo with that dbpath
-``` mongod --dbpath db  
+Create a 'db' folder in your project and start mongo with that dbpath - add db to your .gitignore
+```
+mongod --dbpath db  
 
 2016-07-23T13:07:08.817-0700 I NETWORK  [initandlisten] connection accepted from 127.0.0.1:52346 #3 (1 connection now open)
 
 ```
 
-In another window run mongo - no database until you insert data -  but start
-with use <some name>  
-when you insert mongo will create an "\_id" and a free index
+In another window run mongo - no database until you insert data  
+Start with use db_name   
+When you insert data mongo will create an "_id" and a free index
 
-```
+``` JavaScript
 mongo
 > show dbs
 local  0.000GB

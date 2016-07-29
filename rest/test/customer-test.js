@@ -10,13 +10,21 @@ const expect = chai.expect;
 const request = chai.request;
 const TEST_DB_SERVER = 'mongodb://localhost/test_db';
 process.env.DB_SERVER = TEST_DB_SERVER;  //use test database for testing
-require('../server');
+//require('../server');
 
 describe('Testing CRUD routes Customer', () => {
+  var server;
+  before ((done) =>{
+    server = require('../server');
+    debugger;
+    done();
+  });
   after((done) => {
     mongoose.connection.db.dropDatabase(() => {
-      done();
     });
+    debugger;
+    //server.close();
+    done();
   });
 
   it('should respond with 404 to bad path', (done) => {
@@ -44,7 +52,6 @@ describe('Testing CRUD routes Customer', () => {
     .post('/api/customer/')
     .send({name: 'testname', active: true, year_added: 2106})
     .end((err, res) => {
-      console.log('posted', res.body);
       expect(err).to.eql(null);
       expect(res).to.have.status(200);
       expect(res.body.name).to.eql('testname');
