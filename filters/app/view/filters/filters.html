@@ -1,0 +1,58 @@
+<div ng-init="users = [{name:'John', phone:'555-1276', secret:'shhh'},
+                           {name:'Larry', phone:'800-555-5555', secret:'psst'},
+                           {name:'Mike', phone:'555-4321', secret:'hush'},
+                           {name:'Mary', phone:'555-5678', secret:'blah'},
+                           {name:'Julie', phone:'555-8765', secret:'shhh'}]"></div>
+<div class="container">
+  <div class="row">
+    <div class="list-group col-md-12 ">
+      <!-- just add class table -->
+
+
+      <div class="input-group">
+
+        <div class="form-group col-xs-2">
+          <label for="name"> Name:</label>
+          <input name="name" class="form-control" ng-model="search.name" />
+        </div>
+        <div class=" col-xs-2">
+          <label for="phone"> Phone: </label>
+          <input name="phone" class="form-control" ng-model="search.phone" />
+        </div>
+        <div class="col-xs-2">
+          <label for="secret">Secret:</label>
+          <input name="secret" class="form-control" ng-model="search.secret" />
+        </div>
+
+        <div class="form-group col-xs-2" style="padding-top: 25px">
+          <a href="" class="input-group-addon btn btn-primary inline" ng-click="search.name='';search.phone='';search.secret='';equality=false">Clear</a>
+        </div>
+
+      </div>
+      <div class="col-xs-2">
+        <label for="equality">Equality:</label>
+        <input type="checkbox" class="form-control" name="equality" ng-model="equality" />
+      </div>
+
+      <!--</form>-->
+      <table class="table">
+        <thead>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Secret</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users | filter:{name: search.name, phone: search.phone,secret:search.secret}:equality">
+            <td>{{user.name}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.secret}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+
+
+    </div>
+  </div>

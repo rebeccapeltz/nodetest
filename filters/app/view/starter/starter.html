@@ -1,21 +1,23 @@
-<h2>Customers Starter</h2> Filter: <input type="text" ng-model="starterController.customerFilter.name" />
+<h2>Customers Starter</h2> Filter: <input type="text" />
 <br /><br />
-<table class="table">
+<table>
   <tr>
-    <th style="cursor:pointer" ng-click="starterController.doSort('name')">Name</th>
-    <th style="cursor:pointer" ng-click="starterController.doSort('city')">City</th>
-    <th style="cursor:pointer" ng-click="starterController.doSort('state')">State</th>
-    <th style="cursor:pointer" ng-click="starterController.doSort('orderTotal')">Order Total</th>
-    <th style="cursor:pointer" ng-click="starterController.doSort('joined')">Joined</th>
+    <th>Name</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Order Total</th>
+    <th>Joined</th>
   </tr>
 
-  <tr ng-repeat="cust in starterController.customers | filter:starterController.customerFilter | orderBy:starterController.sortBy:starterController.reverse">
+  <tr ng-repeat="cust in starterController.customers">
     <td>{{ cust.name }}</td>
     <td>{{ cust.city }} </td>
-    <td>{{ cust.state | uppercase}}</td>
-    <td class="{{ cust.orderTotal | amount }}">{{ cust.orderTotal | currency }}</td>
-    <td>{{ cust.joined | date }}</td>
+    <td>{{ cust.state }}</td>
+    <td>{{ cust.orderTotal }}</td>
+    <td>{{ cust.joined }}</td>
   </tr>
 </table>
 <br />
 <span>Total customers: {{ starterController.customers.length }}</span>
+<br />
+<span>Total order amount: {{ starterController.totalOrderAmount() }}</span>

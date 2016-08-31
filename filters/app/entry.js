@@ -18,7 +18,12 @@ app.config(['$routeProvider', function($route) {
       controller: 'HomeController',
       controllerAs: 'hc'
     })
-    .when('/', {
+    .when('/filters', {
+      template: require('./view/filters/filters.html'),
+      controller: 'FilterController',
+      controllerAs: 'hc'
+    })
+    .when('/orderby', {
       template: require('./view/orderby/orderby.html'),
       controller: 'OrderbyController',
       controllerAs: 'ob'
@@ -43,3 +48,4 @@ require('./view/home');
 require('./view/filter_in_controller');
 require('./view/orderby');
 require('./view/starter');
+require('./view/filters');

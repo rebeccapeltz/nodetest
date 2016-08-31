@@ -1,7 +1,7 @@
 #### Build a table with filtering and sorting
 
 #### built in filters
-
+https://docs.angularjs.org/api/ng/filter
 
 
 #### final 
@@ -25,12 +25,21 @@ demoApp.controller('StarterController', [function() {
   this.customers = [
     { joined: '2016-11-11', name: 'Bob Jones', city: 'Portland', state: 'Or', orderTotal: 10.4567 },
     { joined: '2013-03-27', name: 'Barb Seals', city: 'San Francsico', state: 'Ca', orderTotal: 35.9999 },
-    { joined: '1999-9-9', name: 'Sarah Bishop', city: 'Cleveland', state: 'Oh', orderTotal: 52.786 },
+    { joined: '1999-09-09', name: 'Sarah Bishop', city: 'Cleveland', state: 'Oh', orderTotal: 52.786 },
     { joined: '2005-04-25', name: 'Dave', city: 'Seattle', state: 'Wa', orderTotal: 1000.90 }
   ];
   this.doSort = function(propName) {
     this.sortBy = propName;
     this.reverse = !this.reverse;
+  };
+
+  this.totalOrderAmount = function() {
+    return this.customers.map(function(order) {
+      return order.orderTotal;
+    }).
+    reduce(function(prev, current) {
+      return prev + current;
+    });
   };
 }]);
 
@@ -59,17 +68,79 @@ demoApp.controller('StarterController', [function() {
 </table>
 <br />
 <span>Total customers: {{ starterController.customers.length }}</span>
+<br />
+<span>Total order amount: {{ starterController.totalOrderAmount() | currency }}</span>
 ```
 
 
 #### start
 #### controller
 ``` JavaScript
+'use strict';
+
+const angular = require('angular');
+const demoApp = angular.module('demoApp');
+
+// demoApp.filter('amount', function() {
+//   return function(input) {
+//     return input > 500 ? 'large-amount' : 'normal-amount';
+//   };
+// });
+
+
+demoApp.controller('StarterController', [function() {
+  // this.sortBy = 'name';
+  // this.reverse = false;
+
+  this.customers = [
+    { joined: '2016-11-11', name: 'Bob Jones', city: 'Portland', state: 'Or', orderTotal: 10.4567 },
+    { joined: '2013-03-27', name: 'Barb Seals', city: 'San Francsico', state: 'Ca', orderTotal: 35.9999 },
+    { joined: '1999-9-9', name: 'Sarah Bishop', city: 'Cleveland', state: 'Oh', orderTotal: 52.786 },
+    { joined: '2005-04-25', name: 'Dave', city: 'Seattle', state: 'Wa', orderTotal: 1000.90 }
+  ];
+  // this.doSort = function(propName) {
+  //   this.sortBy = propName;
+  //   this.reverse = !this.reverse;
+  // };
+
+  this.totalOrderAmount = function() {
+    return this.customers.map(function(order) {
+      return order.orderTotal;
+    }).
+    reduce(function(prev, current) {
+      return prev + current;
+    });
+  };
+
+}]);
 
 ```
 
 
 ``` html
+<h2>Customers Starter</h2> Filter: <input type="text" />
+<br /><br />
+<table>
+  <tr>
+    <th>Name</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Order Total</th>
+    <th>Joined</th>
+  </tr>
+
+  <tr ng-repeat="cust in starterController.customers">
+    <td>{{ cust.name }}</td>
+    <td>{{ cust.city }} </td>
+    <td>{{ cust.state }}</td>
+    <td>{{ cust.orderTotal }}</td>
+    <td>{{ cust.joined }}</td>
+  </tr>
+</table>
+<br />
+<span>Total customers: {{ starterController.customers.length }}</span>
+<br />
+<span>Total order amount: {{ starterController.totalOrderAmount() }}</span>
 
 ```
 
