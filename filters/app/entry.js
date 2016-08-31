@@ -18,6 +18,16 @@ app.config(['$routeProvider', function($route) {
       controller: 'HomeController',
       controllerAs: 'hc'
     })
+    .when('/', {
+      template: require('./view/orderby/orderby.html'),
+      controller: 'OrderbyController',
+      controllerAs: 'ob'
+    })
+    .when('/incontroller', {
+      template: require('./view/filter_in_controller/filter_in_controller.html'),
+      controller: 'FilterInController',
+      controllerAs: 'fic'
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -25,3 +35,5 @@ app.config(['$routeProvider', function($route) {
 
 // angular components
 require('./view/home');
+require('./view/filter_in_controller');
+require('./view/orderby');
