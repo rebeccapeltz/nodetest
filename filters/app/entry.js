@@ -28,6 +28,11 @@ app.config(['$routeProvider', function($route) {
       controller: 'FilterInController',
       controllerAs: 'fic'
     })
+    .when('/starter', {
+      template: require('./view/starter/starter.html'),
+      controller: 'StarterController',
+      controllerAs: 'starterController'
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -37,3 +42,4 @@ app.config(['$routeProvider', function($route) {
 require('./view/home');
 require('./view/filter_in_controller');
 require('./view/orderby');
+require('./view/starter');
