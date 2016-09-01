@@ -31,6 +31,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
+    "angular-animate": "^1.5.8",
     "angular-mocks": "^1.5.8",
     "jasmine-core": "^2.4.1",
     "karma": "^1.2.0",

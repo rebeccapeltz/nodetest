@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="list-group col-md-6  col-md-offset-3">
-      <a ng-repeat="msg in hc.messages track by $index" href="#/" class="list-group-item">{{$index}}: {{msg}} </a>
+      <a ng-repeat="msg in hc.messages track by $index" ng-animate=" 'animate' " href="#/" class="list-group-item">{{$index}}: {{msg}} </a>
     </div>
   </div>
 </div>

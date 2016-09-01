@@ -6,16 +6,18 @@
     <th style="cursor:pointer" ng-click="ob.doSort('city')">City</th>
     <th style="cursor:pointer" ng-click="ob.doSort('state')">State</th>
     <th style="cursor:pointer" ng-click="ob.doSort('orderTotal')">Order Total</th>
-    <th style="cursor:pointer" ng-click="ob.doSort('joined')">Joined</th>
+    <th style="cursor:pointer" ng-click="ob.doSort('orderDate')">Order Date</th>
   </tr>
 
-  <tr ng-repeat="cust in ob.customers | filter:ob.customerFilter | orderBy:ob.sortBy:ob.reverse">
+  <tr class="animate-repeat" ng-repeat="cust in ob.customers | filter:ob.customerFilter | orderBy:ob.sortCol:ob.toggleReverse">
     <td>{{ cust.name }}</td>
     <td>{{ cust.city }} </td>
     <td>{{ cust.state | uppercase}}</td>
     <td class="{{ cust.orderTotal | amount }}">{{ cust.orderTotal | currency }}</td>
-    <td>{{ cust.joined | date }}</td>
+    <td>{{ cust.orderDate | date }}</td>
   </tr>
 </table>
 <br />
 <span>Total customers: {{ ob.customers.length }}</span>
+<br />
+<span>Total order amount: {{ ob.totalOrderAmount() |currency }}</span>

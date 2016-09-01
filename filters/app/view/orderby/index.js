@@ -10,17 +10,26 @@ demoApp.filter('amount', function() {
 });
 
 demoApp.controller('OrderbyController', [function() {
-  this.sortBy = 'name';
-  this.reverse = false;
+  this.sortCol = 'name';
+  this.toggleReverse = false;
 
   this.customers = [
-    { joined: '2016-11-11', name: 'Bob Jones', city: 'Portland', state: 'Or', orderTotal: 10.4567 },
-    { joined: '2013-03-27', name: 'Barb Seals', city: 'San Francsico', state: 'Ca', orderTotal: 35.9999 },
-    { joined: '1999-09-09', name: 'Sarah Bishop', city: 'Cleveland', state: 'Oh', orderTotal: 52.786 },
-    { joined: '2005-04-25', name: 'Dave Johnson', city: 'Seattle', state: 'Wa', orderTotal: 1000.90 }
+    { orderDate: '2016-11-11', name: 'Bob Jones', city: 'Portland', state: 'Or', orderTotal: 10.4567 },
+    { orderDate: '2013-03-27', name: 'Barb Seals', city: 'San Francsico', state: 'Ca', orderTotal: 35.9999 },
+    { orderDate: '1999-09-09', name: 'Sarah Bishop', city: 'Cleveland', state: 'Oh', orderTotal: 52.786 },
+    { orderDate: '2005-04-25', name: 'Dave Johnson', city: 'Seattle', state: 'Wa', orderTotal: 1000.90 }
   ];
-  this.doSort = function(propName) {
-    this.sortBy = propName;
-    this.reverse = !this.reverse;
+  this.doSort = function(colName) {
+    this.sortCol = colName;
+    this.toggleReverse = !this.toggleReverse;
+  };
+
+  this.totalOrderAmount = function() {
+    return this.customers.map(function(order) {
+      return order.orderTotal;
+    }).
+    reduce(function(prev, current) {
+      return prev + current;
+    });
   };
 }]);

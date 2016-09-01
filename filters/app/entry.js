@@ -7,9 +7,10 @@ require('./scss/base.scss');
 // npm modules
 const angular = require('angular');
 const angular_route = require('angular-route');
+const angular_animate = require('angular-animate');
 
 // angular modules
-var app = angular.module('demoApp', [angular_route]);
+var app = angular.module('demoApp', [angular_route, angular_animate]);
 
 app.config(['$routeProvider', function($route) {
   $route
